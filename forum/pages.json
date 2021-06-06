@@ -1,0 +1,42 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "功能页"
+			}
+		},{
+			"path": "pages/forum/index",
+			"style": {
+				"navigationBarTitleText": "论坛"
+			}
+		},{
+			"path": "pages/att/index",
+			"style": {
+				"navigationBarTitleText": "关注"
+			}
+		},{
+			"path": "pages/issue/index",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		},{
+			"path": "pages/auth/index",
+			"style": {
+				"navigationBarTitleText": "加V"
+			}
+		},{
+			"path": "pages/mine/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",	
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+	
+}
