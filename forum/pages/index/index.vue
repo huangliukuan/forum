@@ -5,15 +5,15 @@
 		</view>
 		<view class="classBox">
 			<view class="classFirst">
-				<view class="classItem" @click="toPath"   data-url="../forum/index">
+				<view class="classItem" @click="toPath"   data-url="/pages/forum/index">
 					<image class="tImg" src="../../static/logo.png" mode=""></image>
 					<view class="txt">论坛论坛</view>
 				</view>
-				<view class="classItem">
+				<view class="classItem" @click="toPath"   data-url="/pages/apply/index">
 					<image class="tImg" src="../../static/logo.png" mode=""></image>
 					<view class="txt">驾校报名</view>
 				</view>
-				<view class="classItem">
+				<view class="classItem" @click="toPath"   data-url="/pages/apply/index">
 					<image class="tImg" src="../../static/logo.png" mode=""></image>
 					<view class="txt">专升本</view>
 				</view>
@@ -24,7 +24,7 @@
 		<view class="classBox">
 			<view class="classTop">
 				<view class="classTit">第一类</view>
-				<view class="arrow"></view>
+				<view class="iconfont arrow"></view>
 			</view>
 			<view class="classFirst">
 				<view class="classItem">
@@ -147,15 +147,6 @@
 					display: flex;
 					justify-content: space-between;
 					padding-top: 20rpx;
-				}
-
-				.arrow {
-					margin-top: 20rpx;
-					width: 25rpx;
-					height: 25rpx;
-					border-right: 1rpx solid #999;
-					border-bottom: 1rpx solid #999;
-					transform: rotate(-45deg);
 				}
 			}
 

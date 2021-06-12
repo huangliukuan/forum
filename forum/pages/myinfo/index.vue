@@ -1,32 +1,33 @@
 <template>
-	<view class="auth">
+	<view class="myinfo">
 		<lk-user></lk-user>
 
-		<view class="prompt">您好，请填写以下认证资料，管理员将在3个工作日内完成审核。认证成功后，您在发帖、评论时将会加v显示。如您在发帖时不想显示个人认证说明，请将发帖昵称改为 某个同学
-			即可。如您已认证，重新提交之前的认证将会取消。</view>
+		<view class="prompt">提示：您正在修改昵称、性别、头像，修改后您在发帖、评论将以新的个人信息进行展示，本次修改将消耗0积分。</view>
 
-		<view class="iptTit">认证说明</view>
+		<view class="iptTit">昵称</view>
 		<view class="prl2">
-			<input class="duties" type="text" value="例如:学生会会长"  />
+			<input class="duties" type="text" value=""  />
 		</view>
-		<view class="iptTit">认证说明</view>
 		
+		<view class="iptTit">性别</view>
+		<view class="prl2">
+			<input class="duties" type="text" value=""  />
+		</view>
+		<view class="iptTit">头像上传</view>
 		<lk-upimg class="prl2"></lk-upimg>
 		
 		<button class="btn" type="default">确认提交</button>
 		
-		<lk-tabbar :checked="3"></lk-tabbar>
+
 	</view>
 </template>
 
 <script>
-	import lkTabbar from '../../components/lk-tabbar/lk-tabbar.vue'
 	import lkUser from "../../components/lk-user/lk-user.vue"
 	import lkUpimg from '../../components/lk-upimg/lk-upimg.vue'
 
 	export default {
 		components: {
-			lkTabbar,
 			lkUser,
 			lkUpimg
 		}
@@ -37,10 +38,10 @@
 	uni-page-body {
 		height: 100%;
 
-		.auth {
+		.myinfo {
 			width: 100%;
 			min-height: 100%;
-			padding-bottom: 160rpx;
+			padding-bottom: 140rpx;
 			background-color: $uni-bg-color;
 
 			.prompt {

@@ -1,6 +1,6 @@
 <template>
 	<view class="forumBox">
-		<view class="forumItem">
+		<view class="forumItem" @click="toPath" data-path="/pages/detail/index">
 			<view class="forumUser">
 				<image src="../../static/logo.png" mode=""></image>
 				<view class="forumUserInfo">
@@ -85,6 +85,22 @@
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+			toPath(e){
+				console.log(e);
+				uni.navigateTo({
+					url:"/pages/detail/index"
+				})
+			}
+		}
+	}
+	
 </script>
 
 <style scoped lang="scss">
@@ -130,8 +146,8 @@
 				display: flex;
 				flex-wrap: wrap;
 				image{
-					width: 23%;
-					height: 180rpx;
+					width: 155rpx;
+					height: 155rpx;
 					margin-right: 14rpx;
 					margin-bottom: 20rpx;
 					&:nth-child(4n){

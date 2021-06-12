@@ -54,7 +54,7 @@
 		.forum {
 			width: 100%;
 			min-height: 100%;
-			padding-bottom: 140rpx;
+			padding-bottom: 160rpx;
 			background-color: $uni-bg-color-grey;
 			.banner {
 				border-radius: $uni-border-radius-lg;
@@ -74,8 +74,8 @@
 						margin-top: 20rpx;
 						font-size: 28rpx;
 						.tImg {
-							width: 100rpx;
-							height: 100rpx;
+							width: 80rpx;
+							height: 80rpx;
 							border-radius: 50%;
 							overflow: hidden;
 						}

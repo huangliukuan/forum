@@ -1,23 +1,28 @@
 <template>
 	<view class="tabbar">
 		<view class="tabItem" v-for="(item,index) in tabbar" :key='index' :data-path='item.path' @click="toSwitch">
-				<view class="" v-if="!item.center">
-					<image :src=" checked == index ? item.selectIcon :item.icon " mode=""></image>
-					<view :class=" checked == index ? 'act':'' ">{{item.text}}</view>
+			<view class="" v-if="!item.center">
+				<image :src=" (checked == index && !item.center) ? item.selectIcon :item.icon " mode=""></image>
+				<view :class="(checked == index && !item.center) ? 'act':'' ">{{item.text}}</view>
+			</view>
+			<view class="" v-if="item.center">
+				<view class="tabCenter" >
+					<image :src="item.icon" mode=""></image>
 				</view>
-				<view class="" v-if="item.center">
-					<view class="tabCenter">
-						<image :src="item.icon" mode=""></image>
-					</view>
-				</view>
+			</view>
 		</view>
+		<lk-mastclass v-if="maskClass" v-on:cancel="cancel"></lk-mastclass>
 	</view>
+
 </template>
 
 <script>
+	import lkMastclass from "../lk-mastclass/index.vue"
+
 	export default {
 		data() {
 			return {
+				maskClass:false,
 				tabbar: [{
 					center: false,
 					path: '../forum/index',
@@ -49,18 +54,32 @@
 				}]
 			}
 		},
-		props:{
-			checked:{
-				type:Number,
-				default:0
+		props: {
+			checked: {
+				type: Number,
+				default: 2
 			}
 		},
 		methods: {
-			toSwitch(e){
-				uni.reLaunch({
-					url:e.currentTarget.dataset.path
-				})
+			// 发布类取消
+			cancel(e){
+				console.log(e);
+				this.maskClass = e;
+			},			
+			toSwitch(e) {
+				let path = e.currentTarget.dataset.path;
+				if(path != "../issue/index"){
+					uni.reLaunch({
+						url: path
+					})
+				}else{
+					this.maskClass = true;
+				}
+				
 			}
+		},
+		components: {
+			lkMastclass
 		}
 	}
 </script>
@@ -72,6 +91,7 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
+		z-index: 998;
 		display: flex;
 		background-color: #ffff;
 		justify-content: space-around;
@@ -91,8 +111,8 @@
 		height: 56rpx;
 		margin: 0 auto 6rpx;
 	}
-	
-	.act{
+
+	.act {
 		color: #4dabf7;
 	}
 
@@ -100,7 +120,7 @@
 		width: 110rpx;
 		height: 110rpx;
 		transform: translate(0, -40%);
-		padding: 10rpx;
+		padding: 8rpx;
 		border-radius: 50%;
 		overflow: hidden;
 		background-color: #fff;
@@ -113,6 +133,6 @@
 		width: 90rpx;
 		height: 90rpx;
 		border-radius: 50%;
-	
+
 	}
 </style>

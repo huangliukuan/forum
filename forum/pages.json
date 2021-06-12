@@ -3,35 +3,98 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "功能页"
+				"navigationBarTitleText": "功能页",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		},{
 			"path": "pages/forum/index",
 			"style": {
-				"navigationBarTitleText": "论坛"
+				"navigationBarTitleText": "论坛",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		},{
 			"path": "pages/att/index",
 			"style": {
-				"navigationBarTitleText": "关注"
+				"navigationBarTitleText": "关注",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		},{
 			"path": "pages/issue/index",
 			"style": {
-				"navigationBarTitleText": "发布"
+				"navigationBarTitleText": "发布",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		},{
 			"path": "pages/auth/index",
 			"style": {
-				"navigationBarTitleText": "加V"
+				"navigationBarTitleText": "加V",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		},{
 			"path": "pages/mine/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"app-plus":{
+						"titleNView":false // 去掉APP、H5的顶部导航
+					}
 			}
 		}
-	],
+	], 
+	"subPackages":[{
+			"root": "pages/myinfo",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "个人资料",
+					"app-plus":{
+							"titleNView":false // 去掉APP、H5的顶部导航
+						}
+				}
+			}]
+		},{
+			"root": "pages/detail",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus":{
+							"titleNView":false // 去掉APP、H5的顶部导航
+						}
+				}
+			}]
+		},{
+			"root": "pages/apply",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus":{
+							"titleNView":false // 去掉APP、H5的顶部导航
+						}
+				}
+			}]
+		},{
+			"root": "pages/form",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus":{
+							"titleNView":false // 去掉APP、H5的顶部导航
+						}
+				}
+			}]
+		}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",	

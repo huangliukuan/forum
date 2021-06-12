@@ -79,12 +79,68 @@ $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:30rpx;
 
 
+.blue{
+	color: #007AFF;
+}
+
+
+
+
+.bcred{
+	background-color: #fa5252 !important;
+}
+
+.bcf{
+	background-color: $uni-bg-color !important;
+}
+
+.br1{
+	border-right: 1rpx solid #F1F1F1;
+}
+
 .p20{
 	padding: $uni-spacing-row-base;
 }
+
+.prl2{
+	padding:0 $uni-spacing-row-base;
+}
+
+
+
 .w20{
 	width: 20%;
 }
-.mr20{
-	margin-right: 20rpx;
+
+.mt20{
+	margin-top: 20rpx;
 }
+
+.mr20{
+	margin-right: $uni-spacing-row-base;
+}
+
+.mb20{
+	margin-bottom: $uni-spacing-row-base;
+}
+
+.mrl20{
+	margin: 0 $uni-spacing-row-base;
+}
+
+.w50{
+	width: 50%;
+}
+
+.w100{
+	width: 100%;
+}
+
+.flex{
+	display: flex;
+}
+::-webkit-scrollbar{
+	width: 0;
+	height: 0;
+	display: none;
+} 
