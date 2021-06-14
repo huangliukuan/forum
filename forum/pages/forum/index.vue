@@ -1,6 +1,6 @@
 <template>
 	<view class="forum">
-		<view class="p20 bannerBox">
+		<view class="p20 bcf">
 			<lk-banner class="banner" :autoplay="true" :circular="true" :height="320"></lk-banner>
 		</view>
 		<view class="classBox">
@@ -54,7 +54,7 @@
 		.forum {
 			width: 100%;
 			min-height: 100%;
-			padding-bottom: 160rpx;
+			padding-bottom: 140rpx;
 			background-color: $uni-bg-color-grey;
 			.banner {
 				border-radius: $uni-border-radius-lg;
@@ -96,7 +96,8 @@
 				
 			}
 			.issueBox{
-				margin-top: 20rpx;
+				// margin-top: 20rpx;
+				padding: 20rpx;
 			}
 		}
 	}

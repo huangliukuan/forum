@@ -110,11 +110,13 @@
 			}
 
 			.classBox {
-				width: 100%;
+				width: 95%;
 				height: auto;
 				background-color: $uni-bg-color;
-				margin-bottom: 20rpx;
+				border-radius: 20rpx;
 				padding: 0 20rpx 20rpx;
+				margin: 0 auto;
+				margin-top: 20rpx;
 
 				.classFirst {
 					display: flex;
@@ -135,7 +137,7 @@
 						.bImg{
 							width: 80rpx;
 							height: 80rpx;
-							border-radius: 50%;
+							border-radius: 20%;
 							overflow: hidden;
 						}
 					}
@@ -147,6 +149,7 @@
 					display: flex;
 					justify-content: space-between;
 					padding-top: 20rpx;
+					border-bottom: 1rpx solid #e6e6e6;
 				}
 			}
 

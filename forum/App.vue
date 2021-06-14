@@ -22,6 +22,10 @@
 	view {
 		box-sizing: border-box;
 	}
+	
+	button::after{
+		border: 0;
+	}
 
 	.mask {
 		width: 100vw;
@@ -36,9 +40,9 @@
 	@font-face {
 		font-family: 'iconfont';
 		/* Project id 2600610 */
-		src: url('//at.alicdn.com/t/font_2600610_pxp27agy63e.woff2?t=1623484497496') format('woff2'),
-			url('//at.alicdn.com/t/font_2600610_pxp27agy63e.woff?t=1623484497496') format('woff'),
-			url('//at.alicdn.com/t/font_2600610_pxp27agy63e.ttf?t=1623484497496') format('truetype');
+		src: url('//at.alicdn.com/t/font_2600610_zbk3bf22jej.woff2?t=1623554938401') format('woff2'),
+			url('//at.alicdn.com/t/font_2600610_zbk3bf22jej.woff?t=1623554938401') format('woff'),
+			url('//at.alicdn.com/t/font_2600610_zbk3bf22jej.ttf?t=1623554938401') format('truetype');
 	}
 
 	.iconfont {
@@ -85,7 +89,8 @@
 	.caidan::after {
 		content: "\e77a";
 	}
+
 	.guanzhu::after {
-		content: "\e638";
+		content: "\e688";
 	}
 </style>

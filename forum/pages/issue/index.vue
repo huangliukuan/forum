@@ -14,22 +14,24 @@
 					placeholder="请输入详细内容,并自觉遵守《中华人民共和国网络安全法》等法律法规,依法依规进行发布 " />
 			</view>
 			<view class="iptTit">上传语音</view>
-			<button class="recording" type="default">点击录音</button>
+			<view class="recording" @click="recordShow">
+				<image src="../../static/luyin.png" mode="scaleToFill"></image>
+			</view>
 			<view class="iptTit">图片</view>
 			<lk-upimg class="prl2"></lk-upimg>
-			<view class="p20">
-				<checkbox-group name="anonymous" >
+			<view class="p20 f28">
+				<checkbox-group name="anonymous">
 					<label>
-						<checkbox value="anonymous" checked="true"  style="transform:scale(0.7)" />是否匿名发布
+						<checkbox value="anonymous" checked="true" style="transform:scale(0.6)" />是否匿名发布
 					</label>
 				</checkbox-group>
 			</view>
 
 			<button class="btn" type="default" form-type="submit">确认上传</button>
 		</form>
-		
-		
-		<lk-record v-if="false"></lk-record>
+
+
+		<lk-record v-if="showRecord" @recordHide="recordHide"></lk-record>
 		<lk-tabbar></lk-tabbar>
 	</view>
 </template>
@@ -38,19 +40,25 @@
 	import lkUser from "../../components/lk-user/lk-user.vue"
 	import lkTabbar from '../../components/lk-tabbar/lk-tabbar.vue'
 	import lkRecord from "../../components/lk-record/lk-record.vue"
-	
- 
+
+
 
 	export default {
 		data() {
 			return {
-
+				showRecord:false,
 			}
 		},
 		methods: {
 			submit(e) {
 				console.log(e);
 			},
+			recordShow() {
+				this.showRecord = true;
+			},
+			recordHide(){
+				this.showRecord = false;
+			}
 		},
 		components: {
 			lkTabbar,
@@ -67,7 +75,7 @@
 		.issue {
 			width: 100%;
 			min-height: 100%;
-			padding-bottom: 160rpx;
+			padding-bottom: 180rpx;
 			background-color: $uni-bg-color;
 
 			.prompt {
@@ -96,17 +104,30 @@
 			}
 
 			.recording {
-				width: 200rpx;
-				height: 56rpx;
+				width: 66rpx;
+				height: 66rpx;
 				line-height: 56rpx;
 				padding: 0;
 				border-radius: 10rpx;
 				margin: 0;
 				margin-left: 20rpx;
 				font-size: 28rpx;
+				border-radius: 50%;
+				background-color: #F1F1F1;
+
+				image {
+					width: 100%;
+					height: 100%;
+				}
 			}
 			
-		
+			.btn{
+				width: 60%;
+				color: #333333;
+				margin-top: 60rpx;
+			}
+
+
 		}
 	}
 </style>

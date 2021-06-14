@@ -1,13 +1,14 @@
 <template>
-	<view class="mask">
+	<view class="mask" @touchmove.stop.prevent="moveHandle">
 		<view class="num"> 1/2 </view>
 		<swiper style="height: 100vh;">
 			<swiper-item class="swiperItem">
-				<image src="../../static/logo.png" mode="aspectFit"></image>
+				<image src="https://i.loli.net/2021/05/28/928gMwqSA5LehNb.png" mode="aspectFit"></image>
 			</swiper-item>
 		</swiper>
 	</view>
 </template>
+
 
 <script>
 	export default{
@@ -17,7 +18,7 @@
 			}
 		},
 		methods:{
-			
+			moveHandle() {}
 		},
 		components:{
 			

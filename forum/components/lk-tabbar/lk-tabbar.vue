@@ -113,7 +113,7 @@
 	}
 
 	.act {
-		color: #4dabf7;
+		color: #FFBB12;
 	}
 
 	.tabCenter {
@@ -126,13 +126,15 @@
 		background-color: #fff;
 		margin: 0 auto;
 		box-shadow: 0 -4rpx 4rpx 4rpx #f1f1f1;
+		display: flex;
+		align-items: center;
 	}
-
+	
 	.tabCenter image {
 		display: block;
 		width: 90rpx;
 		height: 90rpx;
-		border-radius: 50%;
-
+		margin-top: 10rpx;
+		margin-left: -5rpx;
 	}
 </style>

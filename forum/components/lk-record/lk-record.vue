@@ -1,30 +1,32 @@
 <template>
 	<view class="mask">
 		<view class="maskBox">
-			<view class="start" v-if="false">
-				<image class="maskImg" src="../../static/recording.png" mode=""></image>
-				<view class="">点击开始录音</view>
-				<view class="cancel">取消</view>
+			<view class="start" v-if="isRecord == 0">
+				<view  @click="startRecord">
+					<image class="maskImg" src="../../static/recording.png" mode=""></image>
+					<view class="">点击开始录音</view>
+				</view>
+				<view class="cancel" @click="recordHide">取消</view>
 			</view>
-			<view class="processing" v-if="false">
+			<view class="processing" v-if="isRecord == 1" @click="endRecord">
 				<image class="maskImg" src="../../static/recording.png" mode=""></image>
 				<view class="mb20">正在录音，点击停止</view>
 			</view>
-			<view class="end" >
-				<view class="" v-if="false">
+			<view class="end" v-if="isRecord == 2">
+				<view class="" v-if="isPlay == 0"  @click="startPlay">
 					<image class="maskImg" src="../../static/play.png" mode=""></image>
 					<view class="mb20">点击播放</view>
 				</view>
-				<view class="" v-if="false">
+				<view class="" v-if="isPlay == 1" @click="endPlay">
 					<image class="maskImg" src="../../static/playing.png" mode=""></image>
 					<view class="mb20">播放中...点击停止</view>
 				</view>
-				<view class="" >
+				<view class=""  v-if="isPlay == 2">
 					<image class="maskImg" src="../../static/playing.png" mode=""></image>
 					<view class="mb20">播放结束</view>
 				</view>
 				<view class="maskBtn">
-					<view class="w50 br1">取消</view>
+					<view class="w50 br1" @click="recordHide">取消</view>
 					<view class="w50 blue">提交</view>
 				</view>
 			</view>
@@ -36,11 +38,30 @@
 	export default{
 		data(){
 			return{
-				
+				isRecord:0,
+				isPlay:0,
 			}
 		},
 		methods:{
-			
+			// 开始录音
+			startRecord(){
+				this.isRecord = 1;
+			},
+			// 结束录音
+			endRecord(){
+				this.isRecord = 2;
+			},
+			// 开始播放
+			startPlay(){
+				this.isPlay = 1;
+			},
+			// 结束播放
+			endPlay(){
+				this.isPlay = 2;
+			},
+			recordHide(){
+				this.$emit("recordHide",false)
+			}
 		},
 		components:{
 			

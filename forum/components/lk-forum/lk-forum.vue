@@ -4,7 +4,7 @@
 			<view class="forumUser">
 				<image src="../../static/logo.png" mode=""></image>
 				<view class="forumUserInfo">
-					<view class="forumUserName">昵称</view>
+					<view class="forumUserName">昵称  <text class="vipName">学生会主席</text> </view>
 					<view class="forumUser">
 						<text>2020-01-01 12:00有人评论</text>
 						<text>#卖室友</text>
@@ -27,6 +27,9 @@
 				<text>100点赞</text>
 			</view>
 		</view>
+		
+		
+		
 		<view class="forumItem">
 			<view class="forumUser">
 				<image src="../../static/logo.png" mode=""></image>
@@ -105,14 +108,18 @@
 
 <style scoped lang="scss">
 	.forumBox{
-		padding: 0 20rpx;
-		background-color: $uni-bg-color;
+		
 		.forumItem{
 			padding: 20rpx;
-			border-bottom: 1px dashed #ccc;
+			// border-bottom: 1px dashed #ccc;
+			border-radius: 20rpx;
+			background-color: $uni-bg-color;
+			margin-bottom: 10rpx;
+			overflow: hidden;
 			&:last-child{
-				border: 0;
+				border: 0;	
 			}
+			
 			.forumUser{
 				display: flex;
 				image{
@@ -127,6 +134,14 @@
 					.forumUserName{
 						font-size: 30rpx;
 						font-weight: bold;
+					}
+					.vipName{
+						background-color: #dab710;
+						color: #FFFFFF;
+						font-size: 24rpx;
+						margin-left: 10rpx;
+						border-radius: 50rpx;
+						padding: 2rpx 14rpx;
 					}
 					.forumUser{
 						font-size: 26rpx;

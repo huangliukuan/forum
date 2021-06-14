@@ -24,6 +24,7 @@
 		.att{
 			width: 100%;
 			min-height: 100%;
+			padding: 20rpx;
 			padding-bottom: 160rpx;
 			background-color: #f1f1f1;
 		}

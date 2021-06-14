@@ -59,41 +59,58 @@
 </script>
 
 <style scoped lang="scss">
-	.classList{
-		width: 100%;
-		height: auto;
-		display: flex;
-		flex-wrap: wrap;
-	}
+	uni-page-body{
+		height: 100%;
+		.apply{
+			width: 100%;
+			min-height: 100%;
+			background-color: #f1f1f1;
+			
 	
-	.scrollBox{
-		width: 100%;
-		height: 84rpx;
-		line-height: 84rpx;
-		border-bottom: 1rpx solid #d1d1d1;
-		position: relative;
-	}
-	
-	.scrollItem{
-		display: inline-block;
-		white-space: nowrap;
-		position: absolute;
-		top: 0;
-		animation: toLeft 10s linear infinite;
-	}
-	
-	.classItem{
-		width: 50%;
-		height: auto;
-		text-align: center;
-		padding: 40rpx 0;
-		border-bottom: 1rpx solid #d1d1d1;
-		border-right: 1rpx solid #d1d1d1;
-		image{
-			width: 96rpx;
-			height: 96rpx;
+			
+			.scrollBox{
+				width: 100%;
+				height: 84rpx;
+				line-height: 84rpx;
+				border-bottom: 1rpx solid #d1d1d1;
+				position: relative;
+				background-color: $uni-bg-color;
+			}
+			
+			.scrollItem{
+				display: inline-block;
+				white-space: nowrap;
+				position: absolute;
+				top: 0;
+				animation: toLeft 10s linear infinite;
+			}
+			
+			.classList{
+				width: 100%;
+				height: auto;
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.classItem{
+				width: 47%;
+				height: auto;
+				text-align: center;
+				padding: 40rpx 0;
+				margin-left: 2%;
+				margin-top: 20rpx;
+				border-radius: 20rpx;
+				background-color: #FFFFFF;
+				image{
+					width: 96rpx;
+					height: 96rpx;
+				}
+			}
+			
 		}
 	}
+	
+	
 	
 	@keyframes toLeft{
 		0%{

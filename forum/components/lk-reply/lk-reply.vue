@@ -1,5 +1,5 @@
 <template>
-	<view class="mask">
+	<view class="mask" @touchmove.stop.prevent="moveHandle">
 		<view class="box">
 			<view class="title">输入评论内容</view>
 			<view class="p20">
@@ -8,7 +8,7 @@
 				<lk-upimg></lk-upimg>
 			</view>
 			<view class="maskBtn">
-				<view class="w50 br1">取消</view>
+				<view class="w50 br1" @click="replyHide">取消</view>
 				<view class="w50 blue">发布</view>
 			</view>
 		</view>
@@ -25,7 +25,12 @@
 			}
 		},
 		methods: {
-
+			replyHide(){
+				this.$emit("replyHide",false)
+			},
+			moveHandle() {
+				return false
+			}
 		},
 		components: {
 			lkUpimg
@@ -53,7 +58,7 @@
 	.textArea{
 		width: 100%;
 		height: 200rpx;
-		background-color: #ccc;
+		background-color: #f1f1f1;
 		font-size: 28rpx;
 		padding: 4rpx;
 		box-sizing: border-box;

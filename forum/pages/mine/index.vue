@@ -1,6 +1,10 @@
 <template>
 	<view class="mine">
+		
 		<lk-user></lk-user>
+		
+		<view class="mineBox">
+			
 		
 		<view class="mineItem">
 			<view class="left">
@@ -30,7 +34,7 @@
 			</view>
 			<view class="iconfont arrow"></view>
 		</view>
-		
+		</view>
 		<lk-tabbar :checked="4"></lk-tabbar>
 	</view>
 </template>
@@ -66,9 +70,15 @@
 			width: 100%;
 			min-height: 100%;
 			padding-bottom: 160rpx;
-			background-color: #ffff;
+			background-color: #f6f6f6;
 			.iconfont{
 				color: #999;
+			}
+			.mineBox{
+				width: 95%;
+				margin: 20rpx auto;
+				overflow: hidden;
+				border-radius: 20rpx;
 			}
 			.mineItem{
 				width: 100%;
@@ -78,8 +88,11 @@
 				padding: 0 20rpx;
 				display: flex;
 				justify-content: space-between;
-				border-bottom: 1px solid #ccc;
+				border-bottom: 1px solid #e2e2e2;
 				color: #333;
+				&:last-child{
+					border: 0;
+				}
 			}
 		}
 	}

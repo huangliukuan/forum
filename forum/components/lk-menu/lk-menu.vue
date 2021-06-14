@@ -1,27 +1,37 @@
 <template>
-	<view class="menu">
+	<view class="menu" >
 		<view class="menuBox" v-if="show">
-			<view class="menuItem">
-				<view class="iconfont pinglun"></view>
-				<view class="">评论</view>
+			<view class="menuItem" @click="replyShow">
+				<view class="menuImg">
+					<image src="../../static/liaotian.png" mode=""></image>
+				</view>
+				<!-- <view class="">评论</view> -->
+			</view>
+			<view class="menuItem" @click="recordShow">
+				<view class="menuImg">
+					<image src="../../static/luyin.png" mode=""></image>
+				</view>
+				<!-- <view class="">语音评</view> -->
 			</view>
 			<view class="menuItem">
-				<view class="iconfont pinglun"></view>
-				<view class="">语音评</view>
+				<view class="menuImg">
+					<image src="../../static/guanzhu.png" mode=""></image>
+				</view>
+				<!-- <view class="">关注</view> -->
 			</view>
 			<view class="menuItem" @click="toPath">
-				<view class="iconfont home"></view>
-				<view class="">首页</view>
-			</view>
-			<view class="menuItem bcred">
-				<view class="iconfont guanzhu"></view>
-				<view class="">关注</view>
+				<view class="menuImg">
+					<image src="../../static/tabber/home-select.png" mode=""></image>
+				</view>
+				<!-- <view class="">首页</view> -->
 			</view>
 		</view>
 
 		<view class="menuItems" @click="showMenu">
-			<view class="iconfont caidan"></view>
-			<view class="">菜单</view>
+			<view class="menuImg">
+				<image src="../../static/caidan.png" mode=""></image>
+			</view>
+			<!-- <view class="">菜单</view> -->
 		</view>
 	</view>
 </template>
@@ -41,6 +51,12 @@
 				uni.reLaunch({
 					url:"/pages/forum/index"
 				})
+			},
+			replyShow(){
+				this.$emit('replyShow',true)
+			},
+			recordShow(){
+				this.$emit('recordShow',true)
 			}
 		},
 		components: {
@@ -54,7 +70,7 @@
 		width: 80rpx;
 		height: auto;
 		position: fixed;
-		top: 80%;
+		top: 75%;
 		left: 100%;
 		animation: toLeft 0.3s linear forwards;
 	}
@@ -65,8 +81,8 @@
 		height: 80rpx;
 		border-radius: 50%;
 		text-align: center;
-		background-color: #666;
-		color: #fff;
+		// background-color: #666;
+		// color: #fff;
 		font-size: 24rpx;
 		display: flex;
 		flex-direction: column;
@@ -77,9 +93,11 @@
 	
 	.menuItem:first-child{
 		top: -335rpx;
+		color: #748ffc;
 	}
 	.menuItem:nth-child(2){
 		top: -250rpx;
+		
 	}
 	.menuItem:nth-child(3){
 		top: -165rpx;
@@ -92,9 +110,17 @@
 	}
 
 	.menuItems {
-		background-color: #C6D228;
+		background-color: #f1f1f1;
 	}
 	
+	.menuImg{
+		width: 80rpx;
+		height: 80rpx;
+	}
+	.menuImg image{
+		width: 100%;
+		height: 100%;
+	}
 	
 	
 

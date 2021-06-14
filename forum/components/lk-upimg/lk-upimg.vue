@@ -4,7 +4,9 @@
 			<image class="close"  src="../../static/close1.png" mode=""></image>
 			<image src="../../static/logo.png" mode=""></image>
 		</view>
-		<view class="addImg" >+</view>
+		<view class="addImg" >
+			<image src="../../static/shangchuan.png" mode=""></image>
+		</view>
 	</view>
 </template>
 
@@ -51,7 +53,6 @@
 	}
 	
 	.addImg {
-		text-align: center;
 		margin-right: 0;
 		border-radius: 10rpx;
 		font-size: 56rpx;
@@ -59,5 +60,12 @@
 		overflow: hidden;
 		background-color: #f1f1f1;
 		color: #999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		image{
+			width: 115rpx;
+			height: 100rpx;
+		}
 	}
 </style>

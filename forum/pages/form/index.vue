@@ -11,9 +11,9 @@
 
 				</view>
 				<view class="formItem">
-					<view class="label">性别：</view>
+					<view class="label" >性别：</view>
 					<view class="formRight">
-						<radio-group>
+						<radio-group class="gender">
 							<label class="mr20">
 								<radio class="radio" value="man" /><text>男</text>
 							</label>
@@ -22,7 +22,6 @@
 							</label>
 						</radio-group>
 					</view>
-
 				</view>
 				<view class="formItem">
 					<view class="label">手机号：</view>
@@ -48,7 +47,7 @@
 				<view class="formItem">
 					<view class="label">报考车型：</view>
 					<view class="formRight">
-						<picker :range="carList" @change="changePicker" data-type="car">
+						<picker class="picker" :range="carList" @change="changePicker" data-type="car">
 							<view class=""> {{carList[carI]}} </view>
 						</picker>
 					</view>
@@ -57,7 +56,7 @@
 				<view class="formItem">
 					<view class="label">报考车型：</view>
 					<view class="formRight">
-						<picker :range="schoolList" @change="changePicker" data-type="school">
+						<picker class="picker" :range="schoolList" @change="changePicker" data-type="school">
 							<view class=""> {{schoolList[schoolI]}} </view>
 						</picker>
 					</view>
@@ -66,7 +65,7 @@
 				<view class="formItem">
 					<view class="label">报名时间：</view>
 					<view class="formRight">
-						<picker :range="timeList" @change="changePicker" data-type="time">
+						<picker class="picker" :range="timeList" @change="changePicker" data-type="time">
 							<view class=""> {{timeList[timeI]}} </view>
 						</picker>
 					</view>
@@ -121,11 +120,12 @@
 
 	.formItem {
 		width: 100%;
-		height: 84rpx;
-		line-height: 84rpx;
-		display: flex;
-		align-items: center;
+		// height: 84rpx;
+		// line-height: 84rpx;
+		// display: flex;
+		// align-items: center;
 		border-bottom: 1rpx solid #f1f1f1;
+		margin-bottom: 20rpx;
 	}
 	
 	.formItem:last-child{
@@ -144,10 +144,29 @@
 	.label {
 		width: 180rpx;
 	}
-	.formRight{
-		flex: 1;
-		color: #666;
+	.label::after{
+		content: "*";
+		color: #f03e3e;
 	}
+	
+	.formRight{
+		// flex: 1;
+		color: #666;
+		border: 1rpx solid #c3c3c3;
+		margin-top: 20rpx;
+		border-radius: 10rpx;
+		
+	}
+	
+	.formRight .picker,
+	.formRight .gender,
+	.formRight input{
+			height:  54rpx;
+			line-height: 54rpx;
+			padding: 0 20rpx;
+			font-size: 28rpx;
+	}
+	
 	.btn{
 		width: 60%;
 		height: 84rpx;
