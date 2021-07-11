@@ -1,16 +1,20 @@
 <template>
 	<view class="issue">
-		<lk-user></lk-user>
+		<lk-user :userinfo="userinfo"></lk-user>
 		<view class="prompt">禁止发布内容和分类不符、营销推广类等内容，平台已引入AI智能机器人对您发布的信息进行自动检测，同时平台将加强巡查力度，整治不合规信息。</view>
 
 		<form @submit="submit">
 			<view class="iptTit">分类</view>
 			<view class="prl2">
-				<input class="duties" name="class" type="text" value="" placeholder="请填写分类" />
+				<input class="duties" name="className" type="text" :value="className" placeholder="请填写分类" />
+			</view>
+			<view class="iptTit">标题</view>
+			<view class="prl2">
+				<input class="duties" name="title" type="text" value="" placeholder="请填写标题" />
 			</view>
 			<view class="iptTit">详细内容</view>
 			<view class="prl2">
-				<textarea class="textArea" value="" maxlength="200" name="info"
+				<textarea class="textArea" value="" maxlength="200" name="content" 
 					placeholder="请输入详细内容,并自觉遵守《中华人民共和国网络安全法》等法律法规,依法依规进行发布 " />
 			</view>
 			<view class="iptTit">上传语音</view>
@@ -18,7 +22,7 @@
 				<image src="../../static/luyin.png" mode="scaleToFill"></image>
 			</view>
 			<view class="iptTit">图片</view>
-			<lk-upimg class="prl2"></lk-upimg>
+			<lk-upimg class="prl2" :count="6" :imgArr="imgArr" v-on:changeImg='changeImg'></lk-upimg>
 			<view class="p20 f28">
 				<checkbox-group name="anonymous">
 					<label>
@@ -29,9 +33,7 @@
 
 			<button class="btn" type="default" form-type="submit">确认上传</button>
 		</form>
-
-
-		<lk-record v-if="showRecord" @recordHide="recordHide"></lk-record>
+		<lk-record v-if="showRecord" @recording='recording'  @recordHide="recordHide"></lk-record>
 		<lk-tabbar></lk-tabbar>
 	</view>
 </template>
@@ -41,18 +43,85 @@
 	import lkTabbar from '../../components/lk-tabbar/lk-tabbar.vue'
 	import lkRecord from "../../components/lk-record/lk-record.vue"
 
-
-
 	export default {
 		data() {
 			return {
 				showRecord:false,
+				className:'',
+				content:'',
+				imgArr:[],
+				recordId:'',
+				category_id :'',
+				userinfo:'',
 			}
 		},
+		onLoad(e){
+			this.className = e.name;
+			this.category_id = e.id;
+		},
+		onShow() {
+			this.userinfo = uni.getStorageSync('userinfo');
+		},
 		methods: {
-			submit(e) {
-				console.log(e);
+			async submit(e) {
+				let _this =this,
+				form = e.detail.value,
+				systemInfo = uni.getSystemInfoSync();
+				if(!form.className){
+					uni.showToast({
+						title:"分类为空！",
+						icon:"none"
+					})
+					return false;
+				}
+				if(!form.title){
+					uni.showToast({
+						title:"标题为空！",
+						icon:"none"
+					})
+					return false;
+				}
+				if(!form.content){
+					uni.showToast({
+						title:"详细内容为空！",
+						icon:"none"
+					})
+					return false;
+				}
+						console.log(_this.imgArr);
+				await _this.$utils.request({
+					url:"/index/post/publishPost",
+					method:"POST",
+					data:{
+						title:form.title,
+						device_info:systemInfo.model,
+						is_anonymous: form.anonymous[0] == 'anonymous' ? 1:0,
+						content:form.content,
+						img_url:_this.imgArr,
+						voice_url:_this.recordId,
+						category_id:_this.category_id
+					}
+				}).then(res=>{
+						uni.showToast({
+							title:"发布成功",
+							icon:'none'
+						})
+						setTimeout(()=>{
+							uni.reLaunch({
+								url:'/pages/forum/index'
+							})
+						},2000)
+				})
+				
 			},
+			changeImg(e){
+				console.lo
+				this.imgArr = e;
+			},
+			recording(e){
+					this.recordId = e; 
+			},
+			
 			recordShow() {
 				this.showRecord = true;
 			},

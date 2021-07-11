@@ -1,6 +1,6 @@
 <template>
 	<view class="att">
-		<lk-forum></lk-forum>
+		<lk-forum :forumList='forumList'></lk-forum>
 		
 		<lk-tabbar :checked="1"></lk-tabbar>
 	</view>
@@ -14,6 +14,25 @@
 		components:{
 			lkTabbar,
 			lkForum
+		},
+		data(){
+			return {
+				forumList:[],
+			}
+		},
+		onShow() {
+			this.getDataList()
+		},
+		methods:{
+			async getDataList() {
+				let _this = this;
+				await _this.$utils.request({
+					url: '/index/post/getPostForFollower',
+					data: {}
+				}).then(res => {
+					_this.forumList = res;
+				})
+			},
 		}
 	}
 </script>

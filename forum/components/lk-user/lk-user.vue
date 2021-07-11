@@ -1,16 +1,37 @@
 <template>
 	<view class="user">
 		<view class="userBox">
-			<image src="../../static/logo.png" mode=""></image>
+			<image :src="userinfo.headimgurl" mode=""></image>
 			<view class="userItem">
-				<view class="username">昵称</view>
-				<view class="certification">未实名认证</view>
+				<view class="username">{{userinfo.nickName}}</view>
+				<text class="certification">{{userinfo.auth_name ? userinfo.auth_name : '未实名认证'}}</text>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+			}
+		},
+		props:{
+			userinfo:{
+				type:Object,
+				default:()=>{
+					return{}
+				}
+			}
+		},
+		watch:{
+			userinfo(e){
+				this.userinfo = e;
+			}
+		},
+		mounted() {
+		}
+	}
 </script>
 
 <style scoped lang="scss">

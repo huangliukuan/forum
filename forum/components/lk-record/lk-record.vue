@@ -27,7 +27,7 @@
 				</view>
 				<view class="maskBtn">
 					<view class="w50 br1" @click="recordHide">取消</view>
-					<view class="w50 blue">提交</view>
+					<view class="w50 blue" @click="upRecord">提交</view>
 				</view>
 			</view>
 		</view>
@@ -35,29 +35,62 @@
 </template>
 
 <script>
+	import configWeiXin from '../../core/jwx.js'
 	export default{
 		data(){
 			return{
 				isRecord:0,
 				isPlay:0,
+				recordId:''
 			}
 		},
+		mounted() {
+			configWeiXin();	
+		},
 		methods:{
+			// 上传
+			upRecord(){
+				let _this = this;
+				wx.uploadVoice({
+				  localId: _this.recordId, // 需要上传的音频的本地ID，由stopRecord接口获得
+				  isShowProgressTips: 1, // 默认为1，显示进度提示
+				  success: function (res) {
+				     // 返回音频的服务器端ID
+						_this.$emit('recording',res.serverId)
+				  }
+				});
+			},
+			
 			// 开始录音
 			startRecord(){
 				this.isRecord = 1;
+				wx.startRecord();
 			},
 			// 结束录音
 			endRecord(){
-				this.isRecord = 2;
+				let _this = this;
+				_this.isRecord = 2;
+				wx.stopRecord({
+				  success: function (res) {
+				    _this.recordId = res.localId;
+				  }
+				});
 			},
 			// 开始播放
 			startPlay(){
-				this.isPlay = 1;
+				let _this = this;
+				_this.isPlay = 1;
+				wx.playVoice({
+				  localId: _this.recordId // 需要播放的音频的本地ID，由stopRecord接口获得
+				});
 			},
 			// 结束播放
 			endPlay(){
-				this.isPlay = 2;
+				let _this = this;
+				_this.isPlay = 2;
+				wx.stopVoice({
+				  localId: _this.recordId // 需要停止的音频的本地ID，由stopRecord接口获得
+				});
 			},
 			recordHide(){
 				this.$emit("recordHide",false)

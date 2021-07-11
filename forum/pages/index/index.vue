@@ -76,14 +76,16 @@
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			toPath(e){
 				uni.navigateTo({
 					url:e.currentTarget.dataset.url
 				})
-			}
+			},
+		
+			
 		},
 		components: {
 			lkBanner

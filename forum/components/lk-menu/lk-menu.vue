@@ -1,6 +1,13 @@
 <template>
 	<view class="menu" >
 		<view class="menuBox" v-if="show">
+			<view class="menuItem" v-if="isAttention == 0" @click="followUser">
+				<view class="menuImg">
+					<image src="../../static/guanzhu.png" mode=""></image>
+				</view>
+				<!-- <view class="">关注</view> -->
+			</view>
+				
 			<view class="menuItem" @click="replyShow">
 				<view class="menuImg">
 					<image src="../../static/liaotian.png" mode=""></image>
@@ -13,12 +20,7 @@
 				</view>
 				<!-- <view class="">语音评</view> -->
 			</view>
-			<view class="menuItem">
-				<view class="menuImg">
-					<image src="../../static/guanzhu.png" mode=""></image>
-				</view>
-				<!-- <view class="">关注</view> -->
-			</view>
+			
 			<view class="menuItem" @click="toPath">
 				<view class="menuImg">
 					<image src="../../static/tabber/home-select.png" mode=""></image>
@@ -43,7 +45,31 @@
 				show:true,
 			}
 		},
+		props:{
+			isAttention:{
+				type:Number,
+				default:0,
+			},
+			userid:{
+				type:Number,
+				default:0,
+			}
+		},
 		methods: {
+			// 关注
+			async followUser(){
+				await this.$utils.request({
+					url:"/index/user/followUser",
+					method:"POST",
+					data:{
+						follow_id:this.userid
+					}
+				}).then(res=>{
+						console.log(res);
+						_this.$emit('getDateInfo',true)
+				})
+			},
+			
 			showMenu(){
 				this.show = !this.show
 			},
@@ -74,7 +100,13 @@
 		left: 100%;
 		animation: toLeft 0.3s linear forwards;
 	}
-
+	.menuBox{
+		display: flex;
+		flex-direction:  column;
+		justify-content: flex-end;
+		position: absolute;
+		bottom: 80rpx;
+	}
 	.menuItems,
 	.menuItem {
 		width: 80rpx;
@@ -88,23 +120,8 @@
 		flex-direction: column;
 		justify-content: center;
 		margin-bottom: 6rpx;
-		position: absolute;
 	}
 	
-	.menuItem:first-child{
-		top: -335rpx;
-		color: #748ffc;
-	}
-	.menuItem:nth-child(2){
-		top: -250rpx;
-		
-	}
-	.menuItem:nth-child(3){
-		top: -165rpx;
-	}
-	.menuItem:nth-child(4){
-		top: -80rpx;
-	}
 	.menuItem{
 		animation: toTop 0.2s linear forwards;
 	}

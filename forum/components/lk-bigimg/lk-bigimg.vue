@@ -1,9 +1,9 @@
 <template>
-	<view class="mask" @touchmove.stop.prevent="moveHandle">
-		<view class="num"> 1/2 </view>
-		<swiper style="height: 100vh;">
-			<swiper-item class="swiperItem">
-				<image src="https://i.loli.net/2021/05/28/928gMwqSA5LehNb.png" mode="aspectFit"></image>
+	<view class="mask" @touchmove.stop.prevent="moveHandle" @click="closeImg">
+		<view class="num"> {{idx+1}}/{{bigImg.length}} </view>
+		<swiper style="height: 100vh;" :current='idx' @change="change">
+			<swiper-item class="swiperItem"  v-for="(item,index) in bigImg" :key="index">
+				<image :src="item"  mode="aspectFit"></image>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -14,11 +14,34 @@
 	export default{
 		data(){
 			return{
-				
+				idx:0
 			}
 		},
+		props:{
+			imgIndex:{
+				type:Number,
+				default:0,
+			},
+			bigImg:{
+				type:Array,
+				default:()=>{
+					return []
+				}
+			}
+		},
+		watch:{
+			imgIndex(e){
+				this.idx = e;
+			},
+		},
 		methods:{
-			moveHandle() {}
+			moveHandle() {},
+			closeImg(){
+				this.$emit('closeImg',false)
+			},
+			change(e){
+				this.idx = e.detail.current;
+			}
 		},
 		components:{
 			

@@ -3,11 +3,8 @@
 		<view class="classBox">
 			<view class="classTit">选择分类</view>
 			<view class="p20">
-				<view class="classItem" @click="toPath()">心情吐槽</view>
-				<view class="classItem">心情吐槽</view>
-				<view class="classItem">心情吐槽</view>
-				<view class="classItem">心情吐槽</view>
-				<view class="classItem">心情吐槽</view>
+				<view class="classItem" v-for="(item,index) in classArr" :key="index"  
+				@click="toPath" :data-name="item.category_name" :data-id="item.id">{{item.category_name}}</view>
 			</view>
 			<view class="classTit cancel"  @click="cancel">取消发布</view>
 		</view>
@@ -18,16 +15,32 @@
 	export default{
 		data(){
 			return{
-				
+				classArr:[]
 			}
 		},
+		mounted() {
+			this.getClassData()
+		},
 		methods:{
+			async getClassData() {
+				let _this = this;
+				await _this.$utils.request({
+					url: "/index/bbs/getBbsCategory",
+					method: "GET"
+				}).then((res) => {
+					console.log(res);
+					_this.classArr = res;
+				}) 
+			},
+			
 			cancel(){
 				this.$emit("cancel",false)
 			},
-			toPath(){
+			toPath(e){
+				let name = e.currentTarget.dataset.name,
+				id = e.currentTarget.dataset.id;
 				uni.reLaunch({
-					url: "../issue/index"
+					url: `/pages/issue/index?name=${name}&id=${id}`
 				})
 			},
 		},

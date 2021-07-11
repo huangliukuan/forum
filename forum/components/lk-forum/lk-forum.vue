@@ -1,89 +1,41 @@
 <template>
-	<view class="forumBox">
-		<view class="forumItem" @click="toPath" data-path="/pages/detail/index">
+	<view class="forumBox" v-if="forumList">
+		<view class="forumItem" v-for="(item,index) in forumList" :key="index"   @click="toPath" :data-path="'/pages/detail/index?id='+item.id">
 			<view class="forumUser">
-				<image src="../../static/logo.png" mode=""></image>
+				<image :src="item.headimgurl" mode=""></image>
 				<view class="forumUserInfo">
-					<view class="forumUserName">昵称  <text class="vipName">学生会主席</text> </view>
+					<view class="forumUserName"> {{item.nickName}}  <text class="vipName" v-if="item.is_authentication">{{item.auth_name}}</text> </view>
 					<view class="forumUser">
-						<text>2020-01-01 12:00有人评论</text>
-						<text>#卖室友</text>
+						<!-- <text>2020-01-01 12:00有人评论</text> -->
+						<text>#{{item.category_name}}</text>
+						<text>来自{{item.device_info}}</text>
 					</view>
 				</view>
 			</view>
-			<view class="forumText">接口获取到一个本地资源的临时文件路径后，可通过此接口将本地资源上传到指定服务器。另外选择和上传非图像、视频文件参考：</view>
-			<view class="forumImg">
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
+			<view>{{item.title}}</view>
+			<view class="forumText">{{item.content}}</view>
 			
+			
+			<view class="recordBox" v-if="item.voice_url !== ''" :data-src='item.voice_url'>
+				<view class="recordItem">
+					<view class="recordItemArc1"></view>	
+					<view class="recordItemArc2 recordArc2"></view>
+					<view class="recordItemArc3 recordArc3"></view>
+				</view>
+			</view>
+			
+			<view class="forumImg" v-if="item.img_url&& item.img_url[0] != ''">
+				<image v-for="(imgItem,imgIndex) in item.img_url" :key="imgIndex" :src="imgItem" mode=""></image>
 			</view>
 			<view class="forumInfo">
-				<text>来自华为 P100</text>
-				<text>10000浏览</text>
-				<text>100评论</text>
-				<text>100点赞</text>
+				<text>{{item.create_time}}</text>
+				<text>{{item.view_count}}浏览</text>
+				<text>{{item.thumbs_up_count}}评论</text>
+				<text>{{item.comment_count}}点赞</text>
 			</view>
 		</view>
 		
 		
-		
-		<view class="forumItem">
-			<view class="forumUser">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="forumUserInfo">
-					<view class="forumUserName">昵称</view>
-					<view class="forumUser">
-						<text>2020-01-01 12:00有人评论</text>
-						<text>#卖室友</text>
-					</view>
-				</view>
-			</view>
-			<view class="forumText">接口获取到一个本地资源的临时文件路径后，可通过此接口将本地资源上传到指定服务器。另外选择和上传非图像、视频文件参考：</view>
-			<view class="forumImg">
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-			
-			</view>
-			<view class="forumInfo">
-				<text>来自华为 P100</text>
-				<text>10000浏览</text>
-				<text>100评论</text>
-				<text>100点赞</text>
-			</view>
-		</view>
-		<view class="forumItem">
-			<view class="forumUser">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="forumUserInfo">
-					<view class="forumUserName">昵称</view>
-					<view class="forumUser">
-						<text>2020-01-01 12:00有人评论</text>
-						<text>#卖室友</text>
-					</view>
-				</view>
-			</view>
-			<view class="forumText">接口获取到一个本地资源的临时文件路径后，可通过此接口将本地资源上传到指定服务器。另外选择和上传非图像、视频文件参考：</view>
-			<view class="forumImg">
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-				<image src="../../static/logo.png" mode=""></image>
-			
-			</view>
-			<view class="forumInfo">
-				<text>来自华为 P100</text>
-				<text>10000浏览</text>
-				<text>100评论</text>
-				<text>100点赞</text>
-			</view>
-		</view>
 	</view>
 </template>
 
@@ -94,11 +46,18 @@
 				
 			}
 		},
+		props:{
+			forumList:{
+				type:Array,
+				default:()=>{
+					return []
+				}
+			}
+		},
 		methods:{
 			toPath(e){
-				console.log(e);
 				uni.navigateTo({
-					url:"/pages/detail/index"
+					url:e.currentTarget.dataset.path
 				})
 			}
 		}
@@ -157,6 +116,54 @@
 				line-height: 46rpx;
 				color: #333;
 			}
+			
+			.recordBox{
+				width: 100%;
+				margin-bottom: 20rpx;
+				height: 64rpx;
+				line-height: 64rpx;
+				.recordItem{
+					width: 40%;
+					height: 64rpx;
+					line-height: 64rpx;
+					border-radius: 50rpx;
+					background-color: #ffd43b;
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					padding: 0 20rpx;
+					.recordItemArc1{
+						width: 0;
+						height: 0;
+						border-radius: 50rpx;
+						border:15rpx solid #ffd43b;
+						border-right-color: #fff;
+					}
+					.recordItemArc2{
+						width: 16rpx;
+						height: 28rpx;
+						border-radius: 0 60% 60% 0;
+						border-right: 4rpx solid #fff;
+						margin-left: -6rpx;
+					}
+					.recordItemArc3{
+						width: 20rpx;
+						height: 36rpx;
+						border-radius: 0 60% 60% 0;
+						border-right: 4rpx solid #fff;
+						margin-left: -8rpx;
+					}
+				}
+			}
+			
+			.recordArc2{
+				animation: record 1s linear 0s infinite;
+			}
+			
+			.recordArc3{
+				animation: record 1s linear 0.5s infinite;
+			}
+			
 			.forumImg{
 				display: flex;
 				flex-wrap: wrap;
@@ -179,6 +186,15 @@
 					margin-right: 10rpx;
 				}
 			}
+		}
+	}
+	
+	@keyframes record{
+		0%{
+			opacity: 1;
+		}
+		100%{
+			opacity: 0;
 		}
 	}
 

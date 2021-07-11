@@ -3,9 +3,9 @@
 		<view class="box">
 			<view class="title">输入评论内容</view>
 			<view class="p20">
-				<textarea class="textArea" value="" maxlength="200" name="info"
+				<textarea class="textArea" value="" @input="input" maxlength="200" name="info"
 					placeholder="请输入详细内容,并自觉遵守《中华人民共和国网络安全法》等法律法规,依法依规进行发布 " />
-				<lk-upimg></lk-upimg>
+				<lk-upimg :count="6" v-on:changeImg='changeImg'></lk-upimg>
 			</view>
 			<view class="maskBtn">
 				<view class="w50 br1" @click="replyHide">取消</view>
@@ -21,13 +21,28 @@
 	export default {
 		data() {
 			return {
-
+				imgArr:[],
+				
+			}
+		},
+		props:{
+			replyType:{
+				type:String,
+				default:''
 			}
 		},
 		methods: {
+			input(e){
+				
+			},
+			
 			replyHide(){
 				this.$emit("replyHide",false)
 			},
+			changeImg(e){
+				this.imgArr = e;
+			},
+			
 			moveHandle() {
 				return false
 			}

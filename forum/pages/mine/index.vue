@@ -1,7 +1,7 @@
 <template>
 	<view class="mine">
 		
-		<lk-user></lk-user>
+		<lk-user :userinfo="userinfo"></lk-user>
 		
 		<view class="mineBox">
 			
@@ -46,8 +46,11 @@
 	export default {
 		data(){
 			return{
-				
+				userinfo:{},
 			}
+		},
+		onShow() {
+			this.userinfo = uni.getStorageSync('userinfo');
 		},
 		methods:{
 			toPath(e){

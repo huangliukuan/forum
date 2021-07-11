@@ -3,11 +3,14 @@
 		<lk-banner :height="340" ></lk-banner>
 		
 		<view class="scrollBox">
-			<view class="scrollItem"> 你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥</view>
+			<image class="ggtb" src="../../static/caidan.png" mode=""></image>
+			<view class="scrollItem"> 
+			你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥
+			</view>
 		</view>
 		
 		<view class="classList">
-			<view class="classItem" @click="toPath" data-path="/pages/form/index">
+			<view class="classItem classItem1" @click="toPath" data-path="/pages/form/index">
 				<image src="../../static/logo.png" mode=""></image>
 				<view class="">学生学车·预约登记</view>
 			</view>
@@ -28,7 +31,6 @@
 				<view class="">报考驾校·学车介绍</view>
 			</view>
 		</view>
-		
 	</view>
 </template>
 
@@ -70,11 +72,20 @@
 			
 			.scrollBox{
 				width: 100%;
-				height: 84rpx;
-				line-height: 84rpx;
+				height: 64rpx;
+				line-height: 64rpx;
 				border-bottom: 1rpx solid #d1d1d1;
 				position: relative;
 				background-color: $uni-bg-color;
+			}
+			.ggtb{
+				background-color: #fff;
+				height: 50rpx;
+				width: 50rpx;
+				position: absolute;
+			  top: 50%;
+				transform: translate(0,-50%);
+				z-index: 100;
 			}
 			
 			.scrollItem{
@@ -82,8 +93,11 @@
 				white-space: nowrap;
 				position: absolute;
 				top: 0;
-				animation: toLeft 10s linear infinite;
+				animation: toLeft 15s linear infinite;
+				font-size: 30rpx;
+				color: #555555;
 			}
+			
 			
 			.classList{
 				width: 100%;
@@ -105,6 +119,9 @@
 					width: 96rpx;
 					height: 96rpx;
 				}
+			}
+			.classItem1{
+			width: 96%;
 			}
 			
 		}
