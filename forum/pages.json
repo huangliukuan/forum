@@ -94,6 +94,17 @@
 						}
 				}
 			}]
+		},{
+			"root": "pages/rich",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus":{
+							"titleNView":false // 去掉APP、H5的顶部导航
+						}
+				}
+			}]
 		}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/forum/index",
+    "pages/att/index",
+    "pages/issue/index",
+    "pages/auth/index",
+    "pages/mine/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/myinfo",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/detail",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/apply",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/form",
+      "pages": [
+        "index"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

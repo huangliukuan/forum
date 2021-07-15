@@ -1,0 +1,1 @@
+<view class="att data-v-d2de248a"><lk-forum vue-id="3b8d4aab-1" forumList="{{forumList}}" class="data-v-d2de248a" bind:__l="__l"></lk-forum><lk-tabbar vue-id="3b8d4aab-2" checked="{{1}}" class="data-v-d2de248a" bind:__l="__l"></lk-tabbar></view>

@@ -16,7 +16,6 @@
 				</view>
 			</view>
 			<view class="detailTxt">
-				<view class="">{{foruminfo.title}} </view>
 				<view class="forumText">{{foruminfo.content}}</view>
 
 
@@ -70,20 +69,14 @@
 							<view class="c9f26"></view>
 						</view>
 					</view>
-
-
-
 					<view class="detailTxt">
 						<view class="forumText">{{item.comment}}</view>
-						<view class="forumImg">
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
+						<view class="forumImg" v-if="item.img_url !=''">
+							<image v-for="(items,indexs) in item.img_url" :src="items" :key="indexs" :data-index='indexs'
+								@click="changeBig" :data-imgs="item.img_url" mode=""></image>
 						</view>
 					</view>
-					<view class="replyBtn">
+					<view class="replyBtn" @click="replyShow"  data-type='reply' :data-id="item.post_id">
 						<text>回复</text>
 					</view>
 					<view class="reply">
@@ -111,9 +104,9 @@
 			<view class="iconfont reply_icon">评论说点什么吧</view>
 		</view>
 
-		<lk-reply v-if="showReply" @replyHide="replyHide" :replyType='replyType'></lk-reply>
+		<lk-reply v-if="showReply" @replyHide="replyHide" :postId="post_id" :parentId="parent_id" @getDateInfo='getDateInfo' :replyType='replyType'></lk-reply>
 		<lk-record v-if="showRecord" @recordHide="recordHide"></lk-record>
-		<lk-menu :isAttention='isAttention' :userid='foruminfo.user_id' @getDateInfo='getDateInfo' @replyShow="replyShow" @recordShow="recordShow"></lk-menu>
+		<lk-menu :isAttention='isAttention'  :userid='foruminfo.user_id' @getDateInfo='getDateInfo' @replyShow="replyShow" @recordShow="recordShow"></lk-menu>
 
 		<lk-bigimg v-if="showBigimg" :bigImg='bigImg' :imgIndex='imgIndex' v-on:closeImg="closeImg"></lk-bigimg>
 
@@ -143,15 +136,13 @@
 				imgIndex: 0,
 				bigImg: [],
 				isAttention: 0,
+				parent_id:0,
 			}
 		},
 		onLoad(e) {
 			this.post_id = e.id;
 			this.getDateInfo(e.id);
 			this.addViews(e.id);
-			uni.setNavigationBarTitle({
-				title: '23232'
-			})
 		},
 		methods: {
 			async getDateInfo(id) {
@@ -164,14 +155,19 @@
 					}
 				}).then(res => {
 					console.log(res);
-					res.post_info.img_url = JSON.parse(res.post_info.img_url)
+					res.post_info.img_url = JSON.parse(res.post_info.img_url);
+					res.comment_info.forEach(item=>{
+						if(item.img_url != ''){
+							item.img_url = JSON.parse(item.img_url);
+						}
+					})
 					_this.foruminfo = res.post_info;
 					_this.commentinfo = res.comment_info;
 					_this.extinfo = res.ext_info;
 					_this.isAttention = res.ext_info.is_follow_post_user;
 					_this.showHtml = true;
 					uni.setNavigationBarTitle({
-						title: `${_this.foruminfo.nickName}发布的信息`
+						title: `${_this.foruminfo.title}`
 					})
 				})
 			},
@@ -240,6 +236,9 @@
 			replyShow(e) {
 				this.showReply = true;
 				this.replyType = e.currentTarget.dataset.type;
+				if(e.currentTarget.dataset.type == 'reply'){
+					this.parent_id = e.currentTarget.dataset.id;
+				}
 			},
 			replyHide(e) {
 				this.showReply = e;

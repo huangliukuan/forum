@@ -5,46 +5,53 @@
 
 		},
 		onShow: function() {
-			// uni.setStorageSync("token", {
-			// 	access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0ZXN0IiwiYXVkIjoidGVzdCIsImlhdCI6MTYyNTcyNzYzMSwibmJmIjoxNjI1NzI3NjMxLCJkYXRhIjp7InVzZXJfaWQiOjJ9LCJleHAiOjE2MjcwMjM2MzF9.Y7a8ZEsYxOqoqQeEzN4Zr1lHaN0IEehnldrZ2BY6agM",
-			// 	token_type: "bearer"
-			// });
-			// uni.setStorageSync("userinfo", {
-			// 	auth_name: "",
-			// 	birthday: "0000-00-00",
-			// 	city: "",
-			// 	country: "黑山",
-			// 	create_time: "2021-07-08 15:00:31",
-			// 	delete_time: null,
-			// 	headimgurl: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIWP1HQPWCtFOStzUdiaMR2IedSBCZFb6gaGW64zjnhq39cZf2471icYcsY9Mt1YI4FQcgSHlC1hJSA/132",
-			// 	id: 2,
-			// 	is_authentication: 0,
-			// 	is_delete: 0,
-			// 	mobile: "",
-			// 	nickName: "Περιπλανήσεις",
-			// 	openid: "obRbY6RjwxNaO9vZ0hSn0JJyFApc",
-			// 	province: "",
-			// 	sex: 1,
-			// 	unionid: "",
-			// 	update_time: "2021-07-08 15:00:31",
-			// 	user_name: "",
-			// });
+			uni.setStorageSync("token", {
+				access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0ZXN0IiwiYXVkIjoidGVzdCIsImlhdCI6MTYyNTcyNzYzMSwibmJmIjoxNjI1NzI3NjMxLCJkYXRhIjp7InVzZXJfaWQiOjJ9LCJleHAiOjE2MjcwMjM2MzF9.Y7a8ZEsYxOqoqQeEzN4Zr1lHaN0IEehnldrZ2BY6agM",
+				token_type: "bearer"
+			});
+			uni.setStorageSync("userinfo", {
+				auth_name: "",
+				birthday: "0000-00-00",
+				city: "",
+				country: "黑山",
+				create_time: "2021-07-08 15:00:31",
+				delete_time: null,
+				headimgurl: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIWP1HQPWCtFOStzUdiaMR2IedSBCZFb6gaGW64zjnhq39cZf2471icYcsY9Mt1YI4FQcgSHlC1hJSA/132",
+				id: 2,
+				is_authentication: 0,
+				is_delete: 0,
+				mobile: "",
+				nickName: "Περιπλανήσεις",
+				openid: "obRbY6RjwxNaO9vZ0hSn0JJyFApc",
+				province: "",
+				sex: 1,
+				unionid: "",
+				update_time: "2021-07-08 15:00:31",
+				user_name: "",
+			});
 
 
-			let user = uni.getStorageSync('user');
-			let isWeixin = this.isWechat()
-			if (isWeixin && !user) {
-				this.$utils.request({
-					url: '/index/systemConfig/getAppId',
-				}).then((res) => {
-					this.checkWeChatCode(res.app_id) //通过微信官方接口获取code之后，会重新刷新设置的回调地址【redirect_uri】
-					uni.setStorageSync('appid',res.app_id)
-				})
+			// let user = uni.getStorageSync('user');
+			// let isWeixin = this.isWechat()
+			// if (isWeixin && !user) {
+			// 	this.$utils.request({
+			// 		url: '/index/systemConfig/getAppId',
+			// 	}).then((res) => {
+			// 		this.checkWeChatCode(res.app_id) //通过微信官方接口获取code之后，会重新刷新设置的回调地址【redirect_uri】
+			// 		uni.setStorageSync('appid',res.app_id)
+			// 	})
 
-			}
+			// }
+			
+			
+			
 		},
 
 		methods: {
+			
+			
+			
+			
 			/*微信登录相关  start*/
 			//方法：用来判断是否是微信内置的浏览器
 			isWechat() {

@@ -9,7 +9,7 @@
 			</view>
 			<view class="maskBtn">
 				<view class="w50 br1" @click="replyHide">取消</view>
-				<view class="w50 blue">发布</view>
+				<view class="w50 blue" @click="submit">发布</view>
 			</view>
 		</view>
 	</view>
@@ -22,19 +22,71 @@
 		data() {
 			return {
 				imgArr:[],
-				
+				comment:'',
 			}
 		},
 		props:{
 			replyType:{
 				type:String,
 				default:''
+			},
+			postId:{
+				type:String,
+				default:0,
+			},
+			parentId:{
+				type:String,
+				default:0,
 			}
 		},
 		methods: {
 			input(e){
-				
+				this.comment = e.detail.value;
 			},
+			async submit(){
+				
+				let _this = this, data={} ;
+				if(!_this.comment){
+					uni.showToast({
+						title:"请填写内容",
+						icon:'none'
+					})
+					return false;
+				}
+				console.log(_this.parentId);
+				if(_this.replyType == 'forum'){
+					data={
+						post_id:_this.postId,
+						parent_id:0,
+						comment:_this.comment,
+						img_url:_this.imgArr,
+						device_info:uni.getSystemInfoSync().model
+					}
+				}else{
+					data={
+						post_id:_this.postId,
+						parent_id:_this.parentId,
+						comment:_this.comment,
+						img_url:_this.imgArr,
+						device_info:uni.getSystemInfoSync().model
+					}
+				}
+								
+				await _this.$utils.request({
+					url:'/index/post/publishPostComment',
+					method:"POST",
+					data:data
+				}).then(res=>{
+						uni.showToast({
+							title:"评论成功",
+							icon:'none'
+						})
+						_this.$emit("replyHide",false);
+						_this.$emit('getDateInfo',_this.postId);
+						
+				})
+			},
+			
 			
 			replyHide(){
 				this.$emit("replyHide",false)

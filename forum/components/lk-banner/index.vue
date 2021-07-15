@@ -4,14 +4,8 @@
 		:autoplay="autoplay" 
 		:indicator-dots="indicatorDots" 
 		:circular="circular"  :style="{height:height+'rpx'}">
-			<swiper-item class="swiperItem">
-				<image src="https://i.loli.net/2021/05/28/928gMwqSA5LehNb.png" mode=""></image>
-			</swiper-item>
-			<swiper-item class="swiperItem">
-				<image src="https://i.loli.net/2021/05/28/928gMwqSA5LehNb.png" mode=""></image>
-			</swiper-item>
-			<swiper-item class="swiperItem">
-				<image src="https://i.loli.net/2021/05/28/928gMwqSA5LehNb.png" mode=""></image>
+			<swiper-item class="swiperItem" v-for="(item,index) in banners" :key="index">
+				<image :src="item" mode=""></image>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -36,6 +30,22 @@
 				type: Boolean,
 				default: false
 			},
+			banner:{
+				type:Array,
+				default:()=>{
+					return []
+				}
+			}
+		},
+		data(){
+			return{
+				banners:[],
+			}
+		},
+		watch:{
+			banner(e){
+				this.banners = e;
+			}
 		}
 	}
 </script>

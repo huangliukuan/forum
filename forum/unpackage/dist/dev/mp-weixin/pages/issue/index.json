@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "发布",
+  "usingComponents": {
+    "lk-user": "/components/lk-user/lk-user",
+    "lk-upimg": "/components/lk-upimg/lk-upimg",
+    "lk-record": "/components/lk-record/lk-record",
+    "lk-tabbar": "/components/lk-tabbar/lk-tabbar"
+  }
+}

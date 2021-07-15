@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "lk-upimg": "/components/lk-upimg/lk-upimg"
+  }
+}

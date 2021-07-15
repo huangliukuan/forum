@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "论坛",
+  "usingComponents": {
+    "lk-forum": "/components/lk-forum/lk-forum",
+    "lk-tabbar": "/components/lk-tabbar/lk-tabbar",
+    "lk-banner": "/components/lk-banner/index"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "个人资料",
+  "usingComponents": {
+    "lk-user": "/components/lk-user/lk-user",
+    "lk-upimg": "/components/lk-upimg/lk-upimg"
+  }
+}

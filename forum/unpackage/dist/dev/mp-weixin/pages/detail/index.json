@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "lk-reply": "/components/lk-reply/lk-reply",
+    "lk-record": "/components/lk-record/lk-record",
+    "lk-menu": "/components/lk-menu/lk-menu",
+    "lk-bigimg": "/components/lk-bigimg/lk-bigimg"
+  }
+}

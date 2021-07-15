@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "关注",
+  "usingComponents": {
+    "lk-forum": "/components/lk-forum/lk-forum",
+    "lk-tabbar": "/components/lk-tabbar/lk-tabbar"
+  }
+}

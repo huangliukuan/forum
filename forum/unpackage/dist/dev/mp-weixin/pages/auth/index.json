@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "加V",
+  "usingComponents": {
+    "lk-user": "/components/lk-user/lk-user",
+    "lk-upimg": "/components/lk-upimg/lk-upimg",
+    "lk-tabbar": "/components/lk-tabbar/lk-tabbar"
+  }
+}

@@ -6,21 +6,21 @@
 		<view class="mineBox">
 			
 		
-		<view class="mineItem">
-			<view class="left">
-				<text class="iconfont pinglun mr20"></text>
+		<view class="mineItem" @click="toPath" data-path='/pages/forum/index?type=comment'>
+			<view class="left" >
+				<text class="iconfont pinglun mr20" ></text>
 				<text>我的评论</text>
 			</view>
 			<view class="iconfont arrow"></view>
 		</view>
-		<view class="mineItem">
+		<view class="mineItem" @click="toPath" data-path='/pages/forum/index?type=thumbsUp'>
 			<view class="left">
 				<text class="iconfont dianzan mr20"></text>
 				<text>我的点赞</text>
 			</view>
 			<view class="iconfont arrow"></view>
 		</view>
-		<view class="mineItem">
+		<view class="mineItem" @click="toPath" data-path='/pages/forum/index?type=user'>
 			<view class="left">
 				<text class="iconfont fatie mr20"></text>
 				<text>我的发帖</text>

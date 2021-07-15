@@ -2,7 +2,7 @@
 	<view class="myinfo">
 		<lk-user :userinfo="userinfo"></lk-user>
 
-		<view class="prompt">提示：您正在修改昵称、性别、头像，修改后您在发帖、评论将以新的个人信息进行展示，本次修改将消耗0积分。</view>
+		<view class="prompt">提示：您正在修改昵称、性别、头像，修改后您在发帖、评论将以新的个人信息进行展示。</view>
 
 		<view class="iptTit">昵称</view>
 		<view class="prl2">

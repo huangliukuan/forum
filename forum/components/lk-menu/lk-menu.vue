@@ -8,7 +8,7 @@
 				<!-- <view class="">关注</view> -->
 			</view>
 				
-			<view class="menuItem" @click="replyShow">
+			<view class="menuItem" @click="replyShow" data-type='forum'>
 				<view class="menuImg">
 					<image src="../../static/liaotian.png" mode=""></image>
 				</view>
@@ -53,7 +53,8 @@
 			userid:{
 				type:Number,
 				default:0,
-			}
+			},
+			
 		},
 		methods: {
 			// 关注
@@ -78,8 +79,8 @@
 					url:"/pages/forum/index"
 				})
 			},
-			replyShow(){
-				this.$emit('replyShow',true)
+			replyShow(e){
+				this.$emit('replyShow',e)
 			},
 			recordShow(){
 				this.$emit('recordShow',true)

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "功能页",
+  "usingComponents": {
+    "lk-banner": "/components/lk-banner/index"
+  }
+}

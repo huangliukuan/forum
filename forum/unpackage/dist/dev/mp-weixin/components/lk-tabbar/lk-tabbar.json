@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "lk-mastclass": "/components/lk-mastclass/index"
+  }
+}

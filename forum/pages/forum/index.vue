@@ -1,10 +1,11 @@
 <template>
 	<view class="forum">
 		<view class="search">
-			<input type="text" value="" placeholder="搜索" />
+			<input type="text" value="" @input="paramsChange" placeholder="请输入内容" />
+			<text @click="seach">搜索</text>
 		</view>
 		<view class="p20 bcf">
-			<lk-banner class="banner" :autoplay="true" :circular="true" :height="320"></lk-banner>
+			<lk-banner v-if="banner" class="banner" :banner="banner" :autoplay="true" :circular="true" :height="320"></lk-banner>
 		</view>
 		<view class="classBox">
 			<view class="classFirst">
@@ -43,7 +44,7 @@
 			lkTabbar,
 			lkBanner,
 			lkForum,
-
+			
 		},
 		data() {
 			return {
@@ -51,13 +52,72 @@
 				selClassSecond: 'newest',
 				category_id: '',
 				forumList: [],
+				banner:[],
+				params:'',
+			}
+		},
+		onLoad(o) {
+			console.log(o);
+			let _this = this;
+			if(o.type == 'user'){
+				_this.getPostForUser();
+			}
+			if(o.type == 'comment'){
+				_this.getPostForUserComment();
+			}
+			if(o.type == 'thumbsUp'){
+				_this.getPostForUserThumbsUp();
+			}
+			if(o.id){
+				this.category_id = o.id;
+				_this.getDataList();
 			}
 		},
 		onShow() {
 			this.getClassData();
 			this.getDataList();
+			this.getHomePageImg();
 		},
 		methods: {
+			// 获取用户帖子
+			getPostForUser(){
+				let _this = this;
+				_this.$utils.request({
+					url:'/index/post/getPostForUser'
+				}).then(res=>{
+					_this.forumList  =res;
+				})
+			},// 获取评论过的帖子
+			getPostForUserComment(){
+				let _this = this;
+				_this.$utils.request({
+					url:'/index/post/getPostForUserComment'
+				}).then(res=>{
+					_this.forumList  =res;
+				})
+			},//获取用户点赞过的帖子
+			getPostForUserThumbsUp(){
+				let _this = this;
+				_this.$utils.request({
+					url:'/index/post/getPostForUserThumbsUp'
+				}).then(res=>{
+					_this.forumList  =res;
+				})
+			},
+			
+			
+			async getHomePageImg(){
+				let _this =this;
+				await _this.$utils.request({
+					url:'/index/systemConfig/getHomePageImg',
+					data:{
+						carousel_type:'bbs_page_img'
+					}
+				}).then(res=>{
+					_this.banner = res;
+				})
+			},
+			
 			async getClassData() {
 				let _this = this;
 				await _this.$utils.request({
@@ -81,6 +141,22 @@
 				})
 			},
 
+			// 搜索
+			async seach(){
+				let _this =  this;
+				await _this.$utils.request({
+					url:'/index/post/searchPost',
+					
+					data:{
+						params:this.params
+					}
+				}).then(res=>{
+					_this.forumList =res; 
+				})
+			},
+			paramsChange(e){
+				this.params = e.detail.value;
+			},
 			selectClass(e) {
 				this.category_id = e.currentTarget.dataset.id;
 				this.getDataList();
@@ -110,13 +186,17 @@
 				margin: 0 auto;
 				height: 52rpx;
 				background-color: #fff;
+				display: flex;
+				justify-content: space-between;
+				padding: 0 20rpx;
+				color: #333;
+				font-size: 28rpx;
 			}
 
 			.search input {
 				background-color: $uni-bg-color-grey;
-				width: 96%;
+				width: 86%;
 				height: 48rpx;
-				margin: 0 auto;
 				padding: 0 0 0 20rpx;
 				border-radius: 50rpx;
 				border: 1rpx solid #e7e7e7;

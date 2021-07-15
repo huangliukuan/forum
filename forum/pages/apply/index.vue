@@ -1,34 +1,16 @@
 <template>
 	<view class="apply">
-		<lk-banner :height="340" ></lk-banner>
+		<lk-banner v-if="banner" :banner="banner" :height="340" ></lk-banner>
 		
 		<view class="scrollBox">
 			<image class="ggtb" src="../../static/caidan.png" mode=""></image>
-			<view class="scrollItem"> 
-			你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥你好，你是谁你是啥
-			</view>
+			<view class="scrollItem">{{adv}}</view>
 		</view>
 		
 		<view class="classList">
-			<view class="classItem classItem1" @click="toPath" data-path="/pages/form/index">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="">学生学车·预约登记</view>
-			</view>
-			<view class="classItem">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="">报考驾校·学车介绍</view>
-			</view>
-			<view class="classItem">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="">报考驾校·学车介绍</view>
-			</view>
-			<view class="classItem">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="">报考驾校·学车介绍</view>
-			</view>
-			<view class="classItem">
-				<image src="../../static/logo.png" mode=""></image>
-				<view class="">报考驾校·学车介绍</view>
+			<view class="classItem classItem1"  v-for="(item,index) in classList" :key="index"  @click="toPath" :data-type="item.type"  :data-path="item.detail">
+				<image :src="item.category_img" mode=""></image>
+				<view class="">{{item.category_name}}</view>
 			</view>
 		</view>
 	</view>
@@ -39,19 +21,78 @@
 	export default{
 		data(){
 			return{
-				
+				type:"",
+				banner:[],
+				adv:'',
+				classList:[],
 			}
 		},
-		onShow() {
+		onLoad(o) {
+			this.type = o.type;
 			uni.setNavigationBarTitle({
-				title:"分类"
+				title:o.type=='car' ? '驾校报名' :'专升本'
 			})
 		},
+		onShow() {
+			
+			this.getHomePageImg();
+			this.getFormScroll();
+			this.getCarFormCategory();
+		},
 		methods:{
-			toPath(e){
-				uni.navigateTo({
-					url:e.currentTarget.dataset.path
+			async getHomePageImg(){
+				let _this =this;
+				await _this.$utils.request({
+					url:'/index/systemConfig/getHomePageImg',
+					data:{
+						carousel_type: this.type == 'car'? 'car_form_img':'graduation_form_img'
+					}
+				}).then(res=>{
+					_this.banner = res;
 				})
+			},
+			async getFormScroll(){
+				let _this = this;
+				await _this.$utils.request({
+					url:'/index/systemConfig/getFormScroll',
+					method:"POST",
+					data:{
+						type:this.type == 'car'? 'car_scroll ':'graduation_scroll'
+					}
+				}).then(res=>{
+					
+					_this.adv = res;
+				})
+			},
+			async getCarFormCategory(){
+				let _this = this,url='';
+				console.log(_this.type)
+				
+				if(_this.type == 'car'){
+						url='/index/carFormCategory/getCarFormCategory'
+					}else{
+						url='/index/graduationFormCategory/getGraduationFormCategory'
+					}
+				
+				await _this.$utils.request({
+					url,
+				}).then(res=>{
+					_this.classList = res;
+				})
+			},
+			toPath(e){
+				
+				if(e.currentTarget.dataset.type == "bbs_link"){
+					uni.navigateTo({
+						url:e.currentTarget.dataset.path
+					})
+				}else{
+					uni.navigateTo({
+						url:'/pages/rich/index?id='+e.currentTarget.dataset.path
+					})
+				}
+				
+			
 			},
 		},
 		components:{
@@ -119,10 +160,12 @@
 					width: 96rpx;
 					height: 96rpx;
 				}
+				
+				&:first-child{
+					width: 96%;
+				}
 			}
-			.classItem1{
-			width: 96%;
-			}
+
 			
 		}
 	}

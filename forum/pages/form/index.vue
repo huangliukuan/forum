@@ -1,6 +1,6 @@
 <template>
 	<view class="form">
-		<rich-text :nodes="richText"></rich-text>
+		<!-- <rich-text :nodes="richText"></rich-text> -->
 		<view class="formBox">
 			<form @submit="submit">
 				<view class="formItem">
@@ -44,7 +44,7 @@
 					</view>
 
 				</view>
-				<view class="formItem">
+				<view class="formItem" v-if="type == 'car'">
 					<view class="label">报考车型：</view>
 					<view class="formRight">
 						<picker class="picker" :range="carList" @change="changePicker" data-type="car">
@@ -54,7 +54,7 @@
 
 				</view>
 				<view class="formItem">
-					<view class="label">报考车型：</view>
+					<view class="label">报考学校：</view>
 					<view class="formRight">
 						<picker class="picker" :range="schoolList" @change="changePicker" data-type="school">
 							<view class=""> {{schoolList[schoolI]}} </view>
@@ -82,6 +82,7 @@
 	export default {
 		data() {
 			return {
+				type:"",
 				richText: '驾校预约申请',
 				carList: ['汽车手动C1', "汽车自动C1"],
 				carI: 0,
@@ -91,12 +92,30 @@
 				timeI: 0
 			}
 		},
-		onShow() {
+		onLoad(o) {
+			this.type = o.type;
 			uni.setNavigationBarTitle({
-				title: "驾校预约申请"
+				title: o.type=="car" ? "驾校预约申请" :'专升本申请'
 			})
+			if(o.type=="car"){
+				
+			}else{
+				this.getUniversityList();
+			}
+		},
+		onShow() {
+			
 		},
 		methods: {
+			getUniversityList(){
+				let _this = this;
+				_this.$utils.request({
+					url:'/index/systemConfig/getUniversityList',
+				}).then(res=>{
+					console.log(res);
+					_this.schoolList =res;
+				})
+			},
 			changePicker(e) {
 				let i = e.detail.value,
 					type = e.currentTarget.dataset.type;
