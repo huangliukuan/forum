@@ -76,20 +76,18 @@
 								@click="changeBig" :data-imgs="item.img_url" mode=""></image>
 						</view>
 					</view>
-					<view class="replyBtn" @click="replyShow"  data-type='reply' :data-id="item.post_id">
+					<view class="replyBtn" @click="replyShow"  data-type='reply' :data-id="item.comment_id">
 						<text>回复</text>
 					</view>
-					<view class="reply">
-						<view class="">@昵称 </view>
-						<view class="forumText">接口获取到一个本地资源的临时文件路径后，可通过此接口将本地资源上传到指定服务器。另外选择和上传非图像、视频文件参考：</view>
-						<view class="forumImg">
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-							<image src="../../static/logo.png" mode=""></image>
-						</view>
-						<view class="">2021-01-23 23:23</view>
+					<view class="reply"   v-if="item.parent_comment_info.parent_id!=0">
+						<view class="">@{{item.parent_comment_info.parent_nickName}} </view>
+						<view class="forumText">{{item.parent_comment_info.parent_comment}}</view>
+						<block  v-if="item.parent_comment_info.parent_img_url != null">
+							<view class="forumImg" v-for="(t,i) in item.parent_comment_info.parent_img_url" :key="i" >
+								<image :src="t" mode=""></image>
+							</view>
+						</block>
+						<view class="">{{item.parent_comment_info.parent_create_time}}</view>
 					</view>
 
 
@@ -155,12 +153,12 @@
 					}
 				}).then(res => {
 					console.log(res);
-					res.post_info.img_url = JSON.parse(res.post_info.img_url);
-					res.comment_info.forEach(item=>{
-						if(item.img_url != ''){
-							item.img_url = JSON.parse(item.img_url);
-						}
-					})
+					// res.post_info.img_url = JSON.parse(res.post_info.img_url);
+					// res.comment_info.forEach(item=>{
+					// 	if(item.img_url != ''){
+					// 		item.img_url = JSON.parse(item.img_url);
+					// 	}
+					// })
 					_this.foruminfo = res.post_info;
 					_this.commentinfo = res.comment_info;
 					_this.extinfo = res.ext_info;

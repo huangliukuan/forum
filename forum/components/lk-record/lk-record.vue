@@ -2,7 +2,7 @@
 	<view class="mask">
 		<view class="maskBox">
 			<view class="start" v-if="isRecord == 0">
-				<view  @click="startRecord">
+				<view @click="startRecord">
 					<image class="maskImg" src="../../static/recording.png" mode=""></image>
 					<view class="">点击开始录音</view>
 				</view>
@@ -13,7 +13,7 @@
 				<view class="mb20">正在录音，点击停止</view>
 			</view>
 			<view class="end" v-if="isRecord == 2">
-				<view class="" v-if="isPlay == 0"  @click="startPlay">
+				<view class="" v-if="isPlay == 0" @click="startPlay">
 					<image class="maskImg" src="../../static/play.png" mode=""></image>
 					<view class="mb20">点击播放</view>
 				</view>
@@ -21,7 +21,7 @@
 					<image class="maskImg" src="../../static/playing.png" mode=""></image>
 					<view class="mb20">播放中...点击停止</view>
 				</view>
-				<view class=""  v-if="isPlay == 2">
+				<view class="" v-if="isPlay == 2">
 					<image class="maskImg" src="../../static/playing.png" mode=""></image>
 					<view class="mb20">播放结束</view>
 				</view>
@@ -35,101 +35,141 @@
 </template>
 
 <script>
-	import configWeiXin from '../../core/jwx.js'
-	export default{
-		data(){
-			return{
-				isRecord:0,
-				isPlay:0,
-				recordId:''
+	import wxjs from "weixin-js-sdk";
+	export default {
+		data() {
+			return {
+				isRecord: 0,
+				isPlay: 0,
+				recordId: '',
+				config:{},
 			}
 		},
 		mounted() {
-			configWeiXin();	
+			this.init()
 		},
-		methods:{
+		methods: {
 			// 上传
-			upRecord(){
+			upRecord() {
 				let _this = this;
-				wx.uploadVoice({
-				  localId: _this.recordId, // 需要上传的音频的本地ID，由stopRecord接口获得
-				  isShowProgressTips: 1, // 默认为1，显示进度提示
-				  success: function (res) {
-				     // 返回音频的服务器端ID
-						_this.$emit('recording',res.serverId)
-				  }
-				});
+				wxjs.ready(res=>{
+					wxjs.uploadVoice({
+						localId: _this.recordId, // 需要上传的音频的本地ID，由stopRecord接口获得
+						isShowProgressTips: 1, // 默认为1，显示进度提示
+						success: function(res) {
+							// 返回音频的服务器端ID
+							_this.$emit('recording', res.serverId);
+							_this.$emit("recordHide", false)
+						}
+					});
+				})
+					
 			},
-			
+			init(){
+				let _this = this;
+				_this.$utils.request({
+					url: '/index/wechat/getWechatJssdkSign',
+					data: {
+						url: window.location.href
+					}
+				}).then(res=>{
+					_this.config = res;
+					wxjs.config({
+						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId: res.appId, // 必填，公众号的唯一标识
+						timestamp: res.timestamp, // 必填，生成签名的时间戳
+						nonceStr: res.nonceStr, // 必填，生成签名的随机串
+						signature: res.signature, // 必填，签名
+						jsApiList: res.jsApiList
+					});
+					wxjs.error(err => {
+						console.log('config fail:', err);
+					});
+				
+					
+				})
+			},
 			// 开始录音
-			startRecord(){
+			startRecord() {
 				this.isRecord = 1;
-				wx.startRecord();
+				wxjs.ready(err=>{
+					wxjs.startRecord()
+				})
 			},
 			// 结束录音
-			endRecord(){
+			endRecord() {
 				let _this = this;
 				_this.isRecord = 2;
-				wx.stopRecord({
-				  success: function (res) {
-				    _this.recordId = res.localId;
-				  }
-				});
+				wxjs.ready(res=>{
+					wxjs.stopRecord({
+						success: function(res) {
+							_this.recordId = res.localId;
+						}
+					});
+				})
+			
+
 			},
 			// 开始播放
-			startPlay(){
+			startPlay() {
 				let _this = this;
 				_this.isPlay = 1;
-				wx.playVoice({
-				  localId: _this.recordId // 需要播放的音频的本地ID，由stopRecord接口获得
-				});
+				wxjs.ready(res=>{
+					wxjs.playVoice({
+						localId: _this.recordId // 需要播放的音频的本地ID，由stopRecord接口获得
+					});
+				})
+				
 			},
 			// 结束播放
-			endPlay(){
+			endPlay() {
 				let _this = this;
 				_this.isPlay = 2;
-				wx.stopVoice({
-				  localId: _this.recordId // 需要停止的音频的本地ID，由stopRecord接口获得
-				});
+				wxjs.ready(res=>{
+					wx.stopVoice({
+						localId: _this.recordId // 需要停止的音频的本地ID，由stopRecord接口获得
+					});
+				})
+				
 			},
-			recordHide(){
-				this.$emit("recordHide",false)
+			recordHide() {
+				this.$emit("recordHide", false)
 			}
 		},
-		components:{
-			
+		components: {
+
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.maskBox{
+	.maskBox {
 		width: 70%;
 		height: auto;
 		background-color: #fff;
 		position: absolute;
 		top: 45%;
 		left: 50%;
-		transform: translate(-50%,-50%);
+		transform: translate(-50%, -50%);
 		border-radius: 10rpx;
 		text-align: center;
 		overflow: hidden;
 	}
-	
-	.maskImg{
+
+	.maskImg {
 		width: 120rpx;
 		height: 120rpx;
 		margin: 20rpx 0;
 	}
-	
-	.cancel{
+
+	.cancel {
 		height: 84rpx;
 		line-height: 84rpx;
 		background-color: #d1d1d1;
 		margin-top: 10rpx;
 	}
-	
-	.maskBtn{
+
+	.maskBtn {
 		width: 100%;
 		height: 84rpx;
 		line-height: 84rpx;
@@ -139,9 +179,9 @@
 		border-top: 1rpx solid #F1F1F1;
 		color: #333;
 	}
-	
-	
-			
+
+
+
 	.btn {
 		width: 60%;
 		height: 86rpx;
@@ -152,5 +192,4 @@
 		margin-bottom: 20rpx;
 		color: #666;
 	}
-	
 </style>

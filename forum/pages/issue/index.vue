@@ -81,14 +81,13 @@
 					})
 					return false;
 				}
-				if(!form.content){
+				if(!form.content || _this.imgArr.length>0 || !_this.recordId ){
 					uni.showToast({
-						title:"详细内容为空！",
+						title:"详细内容,录音或图片最少一样！",
 						icon:"none"
 					})
 					return false;
 				}
-						console.log(_this.imgArr);
 				await _this.$utils.request({
 					url:"/index/post/publishPost",
 					method:"POST",
@@ -115,7 +114,6 @@
 				
 			},
 			changeImg(e){
-				console.lo
 				this.imgArr = e;
 			},
 			recording(e){

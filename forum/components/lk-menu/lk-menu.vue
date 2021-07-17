@@ -1,7 +1,7 @@
 <template>
 	<view class="menu" >
 		<view class="menuBox" v-if="show">
-			<view class="menuItem" v-if="isAttention == 0" @click="followUser">
+			<view class="menuItem" v-if="isAttention == 2" @click="followUser">
 				<view class="menuImg">
 					<image src="../../static/guanzhu.png" mode=""></image>
 				</view>

@@ -32,11 +32,11 @@
 			},
 			postId:{
 				type:String,
-				default:0,
+				default:'',
 			},
 			parentId:{
-				type:String,
-				default:0,
+				type:Number,
+				default:'',
 			}
 		},
 		methods: {
