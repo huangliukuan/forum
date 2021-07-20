@@ -16,11 +16,11 @@
 			<view class="forumText">{{item.content}}</view>
 			
 			
-			<view class="recordBox" v-if="item.voice_url !== ''" :data-src='item.voice_url'>
-				<view class="recordItem">
+			<view class="recordBox" v-if="item.voice_url != ''">
+				<view class="recordItem" @click.stop="audioEvent" :data-id="item.id" :data-url='item.voice_url'>
 					<view class="recordItemArc1"></view>	
-					<view class="recordItemArc2 recordArc2"></view>
-					<view class="recordItemArc3 recordArc3"></view>
+					<view class="recordItemArc2 " :class="audioId == item.id?'recordArc2':''" ></view>
+					<view class="recordItemArc3 " :class="audioId == item.id?'recordArc3':''"></view>
 				</view>
 			</view>
 			
@@ -30,8 +30,8 @@
 			<view class="forumInfo">
 				<text>{{item.create_time}}</text>
 				<text>{{item.view_count}}浏览</text>
-				<text>{{item.thumbs_up_count}}评论</text>
-				<text>{{item.comment_count}}点赞</text>
+				<text>{{item.comment_count}}评论</text>
+				<text>{{item.thumbs_up_count}}点赞</text>
 			</view>
 		</view>
 		
@@ -40,10 +40,13 @@
 </template>
 
 <script>
+	import audio from '../../core/audio.js'
+	
+	const innerAudioContext = uni.createInnerAudioContext();
 	export default{
 		data(){
 			return{
-				
+				audioId:'',
 			}
 		},
 		props:{
@@ -55,11 +58,30 @@
 			}
 		},
 		methods:{
+			audioEvent(e){
+				let _this = this,
+				id = e.currentTarget.dataset.id,
+				url = e.currentTarget.dataset.url;
+				if(_this.audioId != id){
+					innerAudioContext.destroy();
+					_this.audioId = id;
+					innerAudioContext.src = url;
+					innerAudioContext.autoplay = true;
+					
+				}else{
+					_this.audioId = 0;
+					innerAudioContext.destroy();
+				}
+				
+			},
 			toPath(e){
 				uni.navigateTo({
 					url:e.currentTarget.dataset.path
 				})
 			}
+		},
+		onHide() {
+			innerAudioContext.destroy();
 		}
 	}
 	

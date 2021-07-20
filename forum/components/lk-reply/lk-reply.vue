@@ -46,20 +46,21 @@
 			async submit(){
 				
 				let _this = this, data={} ;
-				if(!_this.comment){
+				if(!_this.comment && _this.imgArr.length<1){
 					uni.showToast({
 						title:"请填写内容",
 						icon:'none'
 					})
 					return false;
 				}
-				console.log(_this.parentId);
+				
 				if(_this.replyType == 'forum'){
 					data={
 						post_id:_this.postId,
 						parent_id:0,
 						comment:_this.comment,
 						img_url:_this.imgArr,
+						voice_media_id:'',
 						device_info:uni.getSystemInfoSync().model
 					}
 				}else{
@@ -68,6 +69,7 @@
 						parent_id:_this.parentId,
 						comment:_this.comment,
 						img_url:_this.imgArr,
+						voice_media_id:'',
 						device_info:uni.getSystemInfoSync().model
 					}
 				}

@@ -27,15 +27,15 @@
 
 
 				<view class="recordBox" v-if="foruminfo.voice_url != ''">
-					<view class="recordItem">
-						<view class="recordItemArc1"></view>
-						<view class="recordItemArc2 recordArc2"></view>
-						<view class="recordItemArc3 recordArc3"></view>
+					<view class="recordItem" @click.stop="audioEvent" :data-id="foruminfo.id" :data-url='foruminfo.voice_url'>
+						<view class="recordItemArc1"></view>	
+						<view class="recordItemArc2 " :class="audioId == foruminfo.id?'recordArc2':''" ></view>
+						<view class="recordItemArc3 " :class="audioId == foruminfo.id?'recordArc3':''"></view>
 					</view>
 				</view>
 			</view>
 			<view class="report">
-				<text>举报</text>
+				<text @click="report">举报</text>
 			</view>
 			<view class="like">
 				<view class="likeBtn">
@@ -60,7 +60,7 @@
 								<view class="c3f28">{{item.nickName}}</view>
 								<view class="c9f26">
 									<text>来自Android {{item.create_time}}</text>
-									<text @click="replayLike" data-id="2" class="iconfont dianzan"></text><text>0</text>
+									<text @click="replayLike" :data-id="item.is_thumbs_up" class="iconfont dianzan"></text><text>{{item.thumbs_up_count}}</text>
 								</view>
 							</view>
 						</view>
@@ -75,18 +75,35 @@
 							<image v-for="(items,indexs) in item.img_url" :src="items" :key="indexs" :data-index='indexs'
 								@click="changeBig" :data-imgs="item.img_url" mode=""></image>
 						</view>
+						<view class="recordBox" v-if="item.voice_url != ''">
+							<view class="recordItem" @click.stop="audioEvent" :data-id="item.comment_id" :data-url='item.voice_url'>
+								<view class="recordItemArc1"></view>	
+								<view class="recordItemArc2 " :class="audioId == item.comment_id?'recordArc2':''" ></view>
+								<view class="recordItemArc3 " :class="audioId == item.comment_id?'recordArc3':''"></view>
+							</view>
+						</view>
+						
+					
 					</view>
-					<view class="replyBtn" @click="replyShow"  data-type='reply' :data-id="item.comment_id">
-						<text>回复</text>
+					<view class="replyBtn"   >
+						<text @click="replyShow" data-type='reply' :data-id="item.comment_id">回复</text>
 					</view>
 					<view class="reply"   v-if="item.parent_comment_info.parent_id!=0">
 						<view class="">@{{item.parent_comment_info.parent_nickName}} </view>
 						<view class="forumText">{{item.parent_comment_info.parent_comment}}</view>
-						<block  v-if="item.parent_comment_info.parent_img_url != null">
+						<block  v-if="item.parent_comment_info.parent_img_url[0] !=''&&item.parent_comment_info.parent_img_url">
 							<view class="forumImg" v-for="(t,i) in item.parent_comment_info.parent_img_url" :key="i" >
 								<image :src="t" mode=""></image>
 							</view>
 						</block>
+						<view class="recordBox" v-if="item.parent_comment_info.parent_voice_url != ''">
+							<view class="recordItem" @click.stop="audioEvent" :data-id="item.parent_comment_info.parent_id" :data-url='item.parent_comment_info.parent_voice_url'>
+								<view class="recordItemArc1"></view>	
+								<view class="recordItemArc2 " :class="audioId == item.parent_comment_info.parent_id?'recordArc2':''" ></view>
+								<view class="recordItemArc3 " :class="audioId == item.parent_comment_info.parent_id?'recordArc3':''"></view>
+							</view>
+						</view>
+						
 						<view class="">{{item.parent_comment_info.parent_create_time}}</view>
 					</view>
 
@@ -103,7 +120,7 @@
 		</view>
 
 		<lk-reply v-if="showReply" @replyHide="replyHide" :postId="post_id" :parentId="parent_id" @getDateInfo='getDateInfo' :replyType='replyType'></lk-reply>
-		<lk-record v-if="showRecord" @recordHide="recordHide"></lk-record>
+		<lk-record v-if="showRecord" @recordHide="recordHide" @recording="recording"></lk-record>
 		<lk-menu :isAttention='isAttention'  :userid='foruminfo.user_id' @getDateInfo='getDateInfo' @replyShow="replyShow" @recordShow="recordShow"></lk-menu>
 
 		<lk-bigimg v-if="showBigimg" :bigImg='bigImg' :imgIndex='imgIndex' v-on:closeImg="closeImg"></lk-bigimg>
@@ -117,7 +134,7 @@
 	import lkMenu from "../../components/lk-menu/lk-menu.vue"
 	import lkRecord from "../../components/lk-record/lk-record.vue"
 	import lkBigimg from "../../components/lk-bigimg/lk-bigimg.vue"
-
+	const innerAudioContext = uni.createInnerAudioContext();
 	export default {
 		data() {
 			return {
@@ -135,6 +152,7 @@
 				bigImg: [],
 				isAttention: 0,
 				parent_id:0,
+				audioId:0
 			}
 		},
 		onLoad(e) {
@@ -143,6 +161,22 @@
 			this.addViews(e.id);
 		},
 		methods: {
+			audioEvent(e){
+				let _this = this,
+				id = e.currentTarget.dataset.id,
+				url = e.currentTarget.dataset.url;
+				if(_this.audioId != id){
+					innerAudioContext.destroy();
+					_this.audioId = id;
+					innerAudioContext.src = url;
+					innerAudioContext.autoplay = true;
+					
+				}else{
+					_this.audioId = 0;
+					innerAudioContext.destroy();
+				}
+				
+			},
 			async getDateInfo(id) {
 				let _this = this;
 				await _this.$utils.request({
@@ -186,7 +220,7 @@
 					method: 'POST',
 					data: {
 						post_id: _this.post_id,
-						status: e.currentTarget.dataset.status
+						status: e.currentTarget.dataset.status == 0 ? 1:0
 					}
 				}).then(res => {
 					_this.getDateInfo(_this.post_id)
@@ -238,6 +272,54 @@
 					this.parent_id = e.currentTarget.dataset.id;
 				}
 			},
+			
+			async recording(id){
+				let _this = this;
+				await _this.$utils.request({
+					url:'/index/post/publishPostComment',
+					method:"POST",
+					data:{
+						post_id:_this.post_id,
+						parent_id:0,
+						comment:"",
+						img_url:[],
+						voice_media_id:id,
+						device_info:uni.getSystemInfoSync().model
+					}
+				}).then(res=>{
+						uni.showToast({
+							title:"评论成功",
+							icon:'none'
+						})
+						_this.getDateInfo(_this.post_id)
+				})
+			},
+			
+			 report(){
+				let _this = this;
+				
+				uni.showModal({
+					title:"提示",
+					content:"确定要举报?",
+					success(res) {
+						if(res.confirm){
+							 _this.$utils.request({
+								url:'/index/post/complaintPost',
+								method:"POST",
+								data:{
+									post_id:_this.post_id
+								}
+							}).then(res=>{
+								uni.showToast({
+									title:"举报成功!",
+									icon:'none'
+								})
+							})
+						}
+					}
+				})	
+			},
+			
 			replyHide(e) {
 				this.showReply = e;
 			},
@@ -247,6 +329,9 @@
 			recordHide(e) {
 				this.showRecord = e;
 			},
+		},
+		onHide() {
+			innerAudioContext.destroy();
 		},
 		components: {
 			lkReply,
@@ -297,9 +382,9 @@
 				padding: 2rpx 4rpx;
 			}
 
-			.detailTxt {
-				min-height: 180rpx;
-			}
+			// .detailTxt {
+			// 	min-height: 180rpx;
+			// }
 
 			.forumText {
 

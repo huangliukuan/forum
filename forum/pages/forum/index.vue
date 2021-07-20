@@ -1,7 +1,7 @@
 <template>
 	<view class="forum">
 		<view class="search">
-			<input type="text" value="" @input="paramsChange" placeholder="请输入内容" />
+			<input type="text" value="" @input="paramsChange" placeholder="请输入标题或内容" />
 			<text @click="seach">搜索</text>
 		</view>
 		<view class="p20 bcf">
@@ -184,7 +184,8 @@
 			.search {
 				width: 100%;
 				margin: 0 auto;
-				height: 52rpx;
+				height: 128rpx;
+				line-height: 128rpx;
 				background-color: #fff;
 				display: flex;
 				justify-content: space-between;
@@ -196,12 +197,14 @@
 			.search input {
 				background-color: $uni-bg-color-grey;
 				width: 86%;
-				height: 48rpx;
+				height: 64rpx;
+				line-height: 64rpx;
 				padding: 0 0 0 20rpx;
 				border-radius: 50rpx;
 				border: 1rpx solid #e7e7e7;
 				font-size: 28rpx;
 				box-sizing: border-box;
+				margin-top: 30rpx;
 			}
 
 			.banner {

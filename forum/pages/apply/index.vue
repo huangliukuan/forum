@@ -57,10 +57,9 @@
 					url:'/index/systemConfig/getFormScroll',
 					method:"POST",
 					data:{
-						type:this.type == 'car'? 'car_scroll ':'graduation_scroll'
+						type:_this.type == 'car'? 'car_scroll ':'graduation_scroll'
 					}
 				}).then(res=>{
-					
 					_this.adv = res;
 				})
 			},

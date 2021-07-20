@@ -81,7 +81,8 @@
 					})
 					return false;
 				}
-				if(!form.content || _this.imgArr.length>0 || !_this.recordId ){
+				console.log(!form.content, _this.imgArr.length<1 ,!_this.recordId )
+				if(!form.content && _this.imgArr.length<1 && !_this.recordId ){
 					uni.showToast({
 						title:"详细内容,录音或图片最少一样！",
 						icon:"none"

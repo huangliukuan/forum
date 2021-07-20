@@ -143,7 +143,10 @@
 		-webkit-text-stroke-width: 0.2px;
 		-moz-osx-font-smoothing: grayscale;
 	}
-
+	img{
+		width: 100%;
+		height: 100%;
+	}
 	.xiugai::after {
 		content: '\e60b';
 	}
